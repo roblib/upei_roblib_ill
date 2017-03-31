@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ * Implementations of installation hooks.
+ */
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function upei_roblib_ill_uninstall() {
+  $variables = array(
+    'upei_roblib_ill_add_url',
+    'upei_roblib_ill_auth_url',
+    'upei_roblib_ill_relais_key',
+    'upei_roblib_ill_library_symbol',
+  );
+  array_walk($variables, 'variable_del');
+}

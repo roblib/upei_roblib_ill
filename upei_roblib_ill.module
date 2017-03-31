@@ -1,0 +1,38 @@
+<?php
+/**
+ * @file
+ * The drupal module file for upei_roblib_ill module
+ */
+function upei_roblib_ill_menu() {
+
+  $items = array();
+
+  $items['admin/settings/roblibill'] = array(
+    'title' => 'UPEI Roblib ILL settings',
+    'description' => 'Conifiguration for the UPEI ILL forms',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('upei_roblib_ill_admin_form'),
+    'access arguments' => array('access administration pages'),
+    'file' => 'includes/admin.form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['upei/roblib/ill'] = array(
+    'title' => 'UPEI ILL Form',
+    'description' => 'The entry point for the UPEI ILL forms',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('upei_roblib_ill_form'),
+    'access arguments' => array('access content'),
+    'file' => 'includes/form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+function upei_roblib_ill_doi_callback($form, &$form_state) {
+  module_load_include('inc', 'upei_roblib_ill', 'includes/doi');
+  $form = upei_roblib_ill_doi_get_data($form, $form_state['values']['doi']);
+  return $form;
+}
+
+
+
