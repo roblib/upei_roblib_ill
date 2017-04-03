@@ -15,7 +15,7 @@ function upei_roblib_ill_add_request($form_state, $aid) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
   $url = variable_get('upei_roblib_ill_add_url', 'https://caul-cbua.relais-host.com/portal-service/request/add');
   $relais_arr = array(
-    "SupplyingLibrarySymbol" => 'PCU',
+    "SupplyingLibrarySymbol" => variable_get('upei_roblib_ill_library_symbol','PCU'),
   );
   $relais_arr['BibliographicInfo'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
   $relais_arr['DeliveryAddress'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_auth_form']);

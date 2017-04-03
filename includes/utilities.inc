@@ -69,7 +69,7 @@ function upei_roblib_ill_get_request_variable($variable) {
 function upei_roblib_ill_request_info_array($values, $notes) {
   $requestInfo = array();
   $genre = $values['Genre'];
-  $requestInfo['DateSubmitted'] = date('Y-m-d');
+  $requestInfo['DateSubmitted'] = date('Y-m-d H:i:s');
   $requestInfo['Notes'] = $notes;
   if ($genre == 'book' || $genre == 'chapter') {
     $requestInfo['ServiceType'] = 'L';
