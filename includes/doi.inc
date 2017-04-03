@@ -37,6 +37,10 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
 function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
   $full_title = $crossref_xml->getElementsbyTagName('full_title')
     ->item(0)->nodeValue;
+  if(empty($full_title)) {
+    $full_title = $crossref_xml->getElementsbyTagName('conference_name')
+      ->item(0)->nodeValue;
+  }
   $form['Title']['#value'] = $full_title;
   $form['ISSN']['#value'] = $crossref_xml->getElementsbyTagName('issn')
     ->item(0)->nodeValue;

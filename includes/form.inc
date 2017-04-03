@@ -38,7 +38,7 @@ function upei_roblib_ill_form($form, &$form_state) {
  */
 function upei_roblib_ill_form_validate($form, &$form_state) {
   if ($form_state['step'] == 'upei_roblib_ill_request_form' && empty($form_state['values']['doi']) && empty($form_state['values']['Title']) &&
-    empty($form_state['values']['ArtcleTitle'])
+    empty($form_state['values']['ArticleTitle'])
   ) {
     form_set_error('Title', t('One of "DOI", "Title" or "Article Title" values must be provided'));
   }
