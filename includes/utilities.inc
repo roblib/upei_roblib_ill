@@ -21,6 +21,14 @@ function upei_roblib_ill_clean_array($values) {
   if (isset($arr['ISBN'])) {
     $arr['ISBN'] = array($arr['ISBN']);
   }
+  //in some cases values need to moved to other fields or eliminated do that here
+  if(isset($arr['PagesRequested']) || isset($arr['ImageOrPageNumber'])) {
+    $arr['PagesRequested'] = $arr['ImageOrPageNumber'] . ' to ' .   $arr['PagesRequested'];
+    unset($arr['ImageOrPageNumber']);
+  }
+  if(isset($arr['Genre']) && $arr['Genre'] == 'article' && isset($arr['Author'])) {
+    unset($arr['Author']);
+  }
   unset($arr['form_build_id']);
   unset($arr['form_token']);
   unset($arr['form_id']);
@@ -29,12 +37,13 @@ function upei_roblib_ill_clean_array($values) {
   unset($arr['next']);
   unset($arr['certify']);
   unset($arr['doi']);
+  unset($arr['doi_button']);
   return $arr;
 }
 
 /**
  * Allows us to ask for _REQUEST variables that may or may not exist without generating a php warning.
- * Also does some formating for certain variables.
+ * Also does some formatting for certain variables.
  * @param string $variable
  *   The name of the $_REQUEST variable to check
  * @return string
@@ -73,4 +82,28 @@ function upei_roblib_ill_request_info_array($values, $notes) {
     $requestInfo['RequestSource'] = "C";
   }
   return $requestInfo;
+}
+
+/**
+ * Creates a summary Table based on the biblio information in the form_state array for display
+ * @param $form_state
+ * @return string
+ */
+function upei_roblib_format_biblio_info($form_state) {
+  $data =  upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
+  $rows = array();
+  foreach($data as $key => $value) {
+    if($key == 'ISSN' || $key == 'ISBN') {
+      $value = reset($value);
+    }
+    array_push($rows, array($key, $value));
+  }
+  $output = array(
+    '#theme' => 'table',
+    '#rows' => $rows,
+    '#prefix' => '<div class=upei-roblib-ill-biblio-info>',
+    '#suffix' => '</div>',
+  );
+  $html_output = drupal_render($output);
+  return $html_output;
 }

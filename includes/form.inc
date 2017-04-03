@@ -93,7 +93,8 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
  *   An array representing the bibliographic form.
  */
 function upei_roblib_ill_auth_form($form, &$form_state) {
-  $_REQUEST;
+  module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
+  $form['#prefix'] = upei_roblib_format_biblio_info($form_state);
 
   $form['FirstName'] = array(
     '#type' => 'textfield',

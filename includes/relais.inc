@@ -18,7 +18,6 @@ function upei_roblib_ill_add_request($form_state, $aid) {
     "SupplyingLibrarySymbol" => 'PCU',
   );
   $relais_arr['BibliographicInfo'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
-  //$relais_arr['BibliographicInfo']
   $relais_arr['DeliveryAddress'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_auth_form']);
   $request_info = upei_roblib_ill_request_info_array($relais_arr['BibliographicInfo'], $form_state['values']['notes']);
   $relais_arr['RequestInfo'] = $request_info;
