@@ -34,6 +34,16 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
   }
 }
 
+
+/**
+ * Parse the response from Crossref and populate the request form
+ * @param DomDocument $crossref_xml
+ *   The crossref xml
+ * @param array $form
+ *   Drupal form
+ * @return mixed
+ *   A Drupal form
+ */
 function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
   $full_title = $crossref_xml->getElementsbyTagName('full_title')
     ->item(0)->nodeValue;

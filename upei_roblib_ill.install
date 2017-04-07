@@ -17,3 +17,148 @@ function upei_roblib_ill_uninstall() {
   );
   array_walk($variables, 'variable_del');
 }
+
+/**
+ * Implements hook_schema().
+ */
+function upei_roblib_ill_schema() {
+  $schema['upei_roblib_ill_request'] = array(
+    'description' => 'Log table for ILL requests',
+    'fields' => array(
+      'id' => array(
+        'description' => 'primary key',
+        'type' => 'serial',
+        'size' => 'big',
+        'not null' => TRUE,
+      ),
+      'patron_id' => array(
+        'description' => 'The id of the user that submitted the request',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'patron_email' => array(
+        'description' => 'The email address of the user that submitted the request',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'patron_lastname' => array(
+        'description' => 'Lastname of the user that submitted the request',
+        'type' => 'varchar',
+        'length' => '60',
+        'not null' => TRUE,
+      ),
+      'patron_firstname' => array(
+        'description' => 'Firstname of the user that submitted the request',
+        'type' => 'varchar',
+        'length' => '60',
+        'not null' => TRUE,
+      ),
+      'patron_department' => array(
+        'description' => 'The department the user that submitted the request belongs',
+        'type' => 'varchar',
+        'length' => '128',
+        'not null' => TRUE,
+      ),
+      'patron_type' => array(
+        'description' => 'The type of patron ',
+        'type' => 'varchar',
+        'length' => '128',
+        'not null' => FALSE,
+      ),
+      'author' => array(
+        'description' => 'authors name',
+        'type' => 'varchar',
+        'length' => '128',
+        'not null' => FALSE,
+      ),
+      'title' => array(
+        'description' => 'book or journal title',
+        'type' => 'varchar',
+        'length' => '512',
+        'not null' => FALSE,
+      ),
+      'atitle' => array(
+        'description' => 'article or chapter title',
+        'type' => 'varchar',
+        'length' => '512',
+        'not null' => FALSE,
+      ),
+      'issn' => array(
+        'description' => 'Article issn',
+        'type' => 'varchar',
+        'length' => '18',
+        'not null' => FALSE,
+      ),
+      'isbn' => array(
+        'description' => 'book isbn',
+        'type' => 'varchar',
+        'length' => '8',
+        'not null' => FALSE,
+      ),
+      'article_author' => array(
+        'description' => 'Article author',
+        'type' => 'varchar',
+        'length' => '128',
+        'not null' => FALSE,
+      ),
+      'citation_date' => array(
+        'description' => 'Date and time of the request',
+        'type' => 'varchar',
+        'length' => '30',
+        'not null' => TRUE,
+      ),
+      'pages_requested' => array(
+        'description' => 'pages requested',
+        'type' => 'varchar',
+        'length' => '30',
+        'not null' => FALSE,
+      ),
+      'volume' => array(
+        'description' => 'Volume',
+        'type' => 'varchar',
+        'length' => '30',
+        'not null' => FALSE,
+      ),
+      'issue' => array(
+        'description' => 'Issue',
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => FALSE,
+      ),
+      'genre' => array(
+        'description' => 'type of material requested (article, book, book chapter)',
+        'type' => 'varchar',
+        'length' => '30',
+        'not null' => TRUE,
+      ),
+      'relais_request_id' => array(
+        'description' => 'The request id stored in the Relais datbabase',
+        'type' => 'varchar',
+        'length' => '30',
+        'not null' => FALSE,
+      ),
+      'relais_failure_message' => array(
+        'description' => 'If the ILL request failed we will store a reason.',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => FALSE,
+      ),
+      'time_submitted' => array(
+        'description' => 'The time the request was submitted',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'notes' => array(
+        'description' => 'Notes',
+        'type' => 'varchar',
+        'length' => '512',
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+
+}

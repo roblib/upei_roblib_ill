@@ -28,10 +28,14 @@ function upei_roblib_ill_add_request($form_state, $aid) {
     'timeout' => 15,
     'headers' => array('Content-Type' => 'application/json'),
   );
-  $result = drupal_http_request($url . '?aid=' . $aid, $options);
+  $result = null;// = drupal_http_request($url . '?aid=' . $aid, $options);
+  module_load_include('inc', 'upei_roblib_ill', 'includes/db');
+  upei_roblib_ill_log_request($relais_arr, NULL);
   if ($result->code == '200') {
     $response_json = $result->data;
     $response_arr = json_decode($response_json);
+    module_load_include('inc', 'upei_roblib_ill', 'includes/db');
+    upei_roblib_ill_log_request($relais_arr, $response_arr);
     //TODO remove or improve the line below after testing
     drupal_set_message('submitted request to relais' . $response_json);
   }
