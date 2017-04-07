@@ -50,7 +50,7 @@ function upei_roblib_ill_views_api() {
 function upei_roblib_ill_views_data() {
   $data['upei_roblib_ill_request']['table']['group'] = t('UPEI Roblib ILL');
   $data['upei_roblib_ill_request']['table']['base'] = array(
-    'field' => 'id', // This is the identifier field for the view.
+    'field' => 'id', 
     'title' => t('UPEI Roblib ILL Request'),
     'help' => t('Table for logging ILL Request'),
     'weight' => -10,
@@ -61,7 +61,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Patron or Campus ID.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -95,7 +95,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Patron Email Address.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -112,7 +112,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Patron Lastname.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -130,7 +130,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Patron Firstname.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -147,7 +147,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Patron Department.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -164,7 +164,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Patron Type.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -181,7 +181,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Authors Fullname.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -198,7 +198,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Book or Patron Title.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -215,7 +215,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Article or Chapter Title.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -232,7 +232,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('ISSN.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -249,7 +249,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('ISBN.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -266,7 +266,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Article or Chapter author.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -283,7 +283,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Article Date.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -300,7 +300,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('The pages requested.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -317,7 +317,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Volume.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -334,7 +334,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Issue.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -351,7 +351,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('Article or Chapter author.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -368,7 +368,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('The Relais request id.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -385,7 +385,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('The reason a request failed.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -402,7 +402,7 @@ function upei_roblib_ill_views_data() {
     'help' => t('The notes related to this request.'),
     'field' => array(
       'handler' => 'views_handler_field',
-      'click sortable' => TRUE, // This is use by the table display plugin.
+      'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -415,9 +415,6 @@ function upei_roblib_ill_views_data() {
     ),
   );
 
-
-
-  // Example timestamp field.
   $data['upei_roblib_ill_request']['time_submitted'] = array(
     'title' => t('The Date and Time a request was submitted'),
     'help' => t('The Date and Time a request was submitted.'),
