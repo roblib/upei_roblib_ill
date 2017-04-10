@@ -34,6 +34,11 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
   }
 }
 
+function upei_roblib_ill_get_xml_node($crossref_xml, $element_name) {
+  return  empty($crossref_xml->getElementsbyTagName($element_name)->item(0)) ? '' :
+    $crossref_xml->getElementsbyTagName($element_name)->item(0)->nodeValue;
+}
+
 
 /**
  * Parse the response from Crossref and populate the request form
@@ -45,36 +50,25 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
  *   A Drupal form
  */
 function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
-  $full_title = $crossref_xml->getElementsbyTagName('full_title')
-    ->item(0)->nodeValue;
-  if(empty($full_title)) {
-    $full_title = $crossref_xml->getElementsbyTagName('conference_name')
-      ->item(0)->nodeValue;
+  $full_title = upei_roblib_ill_get_xml_node($crossref_xml, 'full_title');
+  if (empty($full_title)) {
+    $full_title = upei_roblib_ill_get_xml_node($crossref_xml, 'conference_name');
   }
   $form['Title']['#value'] = $full_title;
-  $form['ISSN']['#value'] = $crossref_xml->getElementsbyTagName('issn')
-    ->item(0)->nodeValue;
-  $form['Date']['#value'] = $crossref_xml->getElementsbyTagName('year')
-    ->item(0)->nodeValue;
-  $form['ArticleTitle']['#value'] = $crossref_xml->getElementsbyTagName('title')
-    ->item(0)->nodeValue;
-  $form['ImageOrPageNumber']['#value'] = $crossref_xml->getElementsbyTagName('first_page')
-    ->item(0)->nodeValue;
-  $form['PagesRequested']['#value'] = $crossref_xml->getElementsbyTagName('last_page')
-    ->item(0)->nodeValue;
-  $form['Volume']['#value'] = $crossref_xml->getElementsbyTagName('volume')
-    ->item(0)->nodeValue;
-  $form['Issue']['#value'] = $crossref_xml->getElementsbyTagName('issue')
-    ->item(0)->nodeValue;
+  $form['ISSN']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'issn');
+  $form['Date']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'year');
+  $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title');
+  $form['ImageOrPageNumber']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'first_page');
+  $form['PagesRequested']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'last_page');
+  $form['Volume']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'volume');
+  $form['Issue']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'issue');
   foreach ($crossref_xml->getElementsbyTagName('person_name') as $person) {
     $role = $person->getAttribute('contributor_role');
     $sequence = $person->getAttribute('sequence');
     if ($person->getAttribute('contributor_role') == 'author' &&
       $person->getAttribute('sequence') == 'first'
     ) {
-      $author = $person->getElementsbyTagName('surname')
-          ->item(0)->nodeValue . ',' . $person->getElementsbyTagName('given_name')
-          ->item(0)->nodeValue;
+      $author = upei_roblib_ill_get_xml_node($crossref_xml, 'surname') . ',' . upei_roblib_ill_get_xml_node($crossref_xml, 'given_name');
     }
   }
   $form['ArticleAuthor']['#value'] = $author;
