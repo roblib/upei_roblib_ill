@@ -267,7 +267,8 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     '#required' => FALSE,
   );
   $form['Title'] = array(
-    '#type' => 'textfield',
+    '#type' => 'textarea',
+    '#rows' => 2,
     '#title' => t('Source Title'),
     '#default_value' => upei_roblib_ill_get_request_variable('title'),
     '#description' => 'Journal or Book Title',
@@ -275,7 +276,8 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     '#required' => FALSE,
   );
   $form['ArticleTitle'] = array(
-    '#type' => 'textfield',
+    '#type' => 'textarea',
+    '#rows' => 2,
     '#title' => t('Title'),
     '#default_value' => upei_roblib_ill_get_request_variable('atitle'),
     '#description' => 'Article or Chapter Title',
@@ -411,7 +413,6 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     '#type' => 'submit',
     '#value' => t('Next')
   );
-  $form_state['stage'] = 'upei_roblib_ill_auth';
   return $form;
 
 }

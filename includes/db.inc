@@ -5,6 +5,13 @@
  */
 
 
+/**
+ * Log an ILL request
+ * @param array $request
+ *   The request sent to Relais as an array (before it is encoded as JSON)
+ * @param array $response
+ *   The response from Relais.
+ */
 function upei_roblib_ill_log_request($request, $response) {
   $time_submitted = isset($request['RequestInfo']['DateSubmitted']) ? $request['RequestInfo']['DateSubmitted'] : '';
   $relais_message = isset($response['ConfirmMessage']) ? $response['ConfirmMessage'] : $response['Problem']['Message'];

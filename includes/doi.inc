@@ -6,7 +6,15 @@
  * all the dependancies it would require.
  */
 
-
+/**
+ * Gets the XML as crossref associated with the supplied DOI.  Updates the drupal form with the data.
+ * @param array $form
+ *   The Drupal form
+ * @param string $doi
+ *   The DOI
+ * @return array
+ *   A Drupal form with updated values.
+ */
 function upei_roblib_ill_doi_get_data($form, $doi) {
   if (empty($doi)) {
     $doi = 'Empty DOI';
@@ -34,9 +42,19 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
   }
 }
 
-function upei_roblib_ill_get_xml_node($crossref_xml, $element_name) {
-  return  empty($crossref_xml->getElementsbyTagName($element_name)->item(0)) ? '' :
-    $crossref_xml->getElementsbyTagName($element_name)->item(0)->nodeValue;
+/**
+ * A convenience function for retrieving individual nodes from the Crossref XML without throwing notices.
+ *
+ * @param DomDocument $crossref_xml
+ *   The Crossref XML
+ * @param string $node_name
+ *   The node we want a value for, we are assuming the xml only has one node with the given name.
+ * @return string
+ *   Returns the value of the element
+ */
+function upei_roblib_ill_get_xml_node($crossref_xml, $node_name) {
+  return  empty($crossref_xml->getElementsbyTagName($node_name)->item(0)) ? '' :
+    $crossref_xml->getElementsbyTagName($node_name)->item(0)->nodeValue;
 }
 
 
@@ -47,7 +65,7 @@ function upei_roblib_ill_get_xml_node($crossref_xml, $element_name) {
  * @param array $form
  *   Drupal form
  * @return mixed
- *   A Drupal form
+ *   An updated Drupal form
  */
 function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
   $full_title = upei_roblib_ill_get_xml_node($crossref_xml, 'full_title');
