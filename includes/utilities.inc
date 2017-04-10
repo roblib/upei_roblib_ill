@@ -74,12 +74,12 @@ function upei_roblib_ill_request_info_array($values, $notes) {
   if ($genre == 'book' || $genre == 'chapter') {
     $requestInfo['ServiceType'] = 'L';
     $requestInfo['ServiceLabel'] = "R";
-    $requestInfo['RequestSource'] = "C";
+    //$requestInfo['RequestSource'] = "C";
   }
   else {
     $requestInfo['ServiceType'] = 'X';
     $requestInfo['ServiceLabel'] = "R";
-    $requestInfo['RequestSource'] = "C";
+    //$requestInfo['RequestSource'] = "C";
   }
   return $requestInfo;
 }

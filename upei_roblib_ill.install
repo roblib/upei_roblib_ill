@@ -139,7 +139,7 @@ function upei_roblib_ill_schema() {
         'length' => '30',
         'not null' => FALSE,
       ),
-      'relais_failure_message' => array(
+      'relais_message' => array(
         'description' => 'If the ILL request failed we will store a reason.',
         'type' => 'varchar',
         'length' => '255',

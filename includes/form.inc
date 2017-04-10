@@ -67,12 +67,7 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
       //process the form
       drupal_set_message('completed form');
       $aid = upei_roblib_ill_authenticate($form_state['values']['campus_id']);
-      if (isset($aid)) {
-        upei_roblib_ill_add_request($form_state, $aid);
-      }
-      else {
-        drupal_set_message(t("Error authenticating with Relais"), 'error');
-      }
+      upei_roblib_ill_add_request($form_state, $aid);
       break;
   }
 

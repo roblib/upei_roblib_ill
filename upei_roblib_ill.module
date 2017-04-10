@@ -50,7 +50,7 @@ function upei_roblib_ill_views_api() {
 function upei_roblib_ill_views_data() {
   $data['upei_roblib_ill_request']['table']['group'] = t('UPEI Roblib ILL');
   $data['upei_roblib_ill_request']['table']['base'] = array(
-    'field' => 'id', 
+    'field' => 'id',
     'title' => t('UPEI Roblib ILL Request'),
     'help' => t('Table for logging ILL Request'),
     'weight' => -10,

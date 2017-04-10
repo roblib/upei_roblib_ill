@@ -5,7 +5,9 @@
  */
 
 
-function upei_roblib_ill_log_request($request, $respose) {
+function upei_roblib_ill_log_request($request, $response) {
+  $time_submitted = isset($request['RequestInfo']['DateSubmitted']) ? $request['RequestInfo']['DateSubmitted'] : '';
+  $relais_message = isset($response['ConfirmMessage']) ? $response['ConfirmMessage'] : $response['Problem']['Message'];
   try {
     db_insert('upei_roblib_ill_request')
       ->fields(array(
@@ -15,19 +17,21 @@ function upei_roblib_ill_log_request($request, $respose) {
         'patron_type' => $request['DeliveryAddress']['patron_type'],
         'patron_department' => $request['DeliveryAddress']['Department'],
         'patron_email' => $request['DeliveryAddress']['DeliveryAddress'],
-        'notes' => $request['DeliveryAddress']['notes'],
-        'genre' => $request['BibliographicInfo']['Genre'],
-        'author' => $request['BibliographicInfo']['Author'],
-        'citation_date' => $request['BibliographicInfo']['Date'],
-        'title' => $request['DeliveryAddress']['Title'],
-        'atitle' => $request['DeliveryAddress']['ArticleTitle'],
-        'issn' => $request['DeliveryAddress']['issn'],
-        'isbn' => $request['DeliveryAddress']['isbn'],
-        'article_author' => $request['DeliveryAddress']['ArtigleAuthor'],
-        'volume' => $request['DeliveryAddress']['Volume'],
-        'issue' => $request['DeliveryAddress']['Issue'],
-        'pages_requested' => $request['DeliveryAddress']['PagesRequested'],
-        'time_submitted' => strtotime($request['RequestInfo']['DateSubmitted']),
+        'notes' => isset($request['DeliveryAddress']['notes']) ? $request['DeliveryAddress']['notes'] : '',
+        'genre' => isset($request['BibliographicInfo']['Genre']) ? $request['BibliographicInfo']['Genre'] : '',
+        'author' => isset($request['BibliographicInfo']['Author']) ? $request['BibliographicInfo']['Author'] : '',
+        'citation_date' => isset($request['BibliographicInfo']['Date']) ? $request['BibliographicInfo']['Date'] : '',
+        'title' => isset($request['BibliographicInfo']['Title']) ? $request['BibliographicInfo']['Title'] : '',
+        'atitle' => isset($request['BibliographicInfo']['ArticleTitle']) ? $request['BibliographicInfo']['ArticleTitle'] : '',
+        'issn' => isset($request['BibliographicInfo']['ISSN'][0]) ? $request['BibliographicInfo']['ISSN'][0] : '',
+        'isbn' => isset($request['BibliographicInfo']['ISBN'][0]) ? $request['BibliographicInfo']['ISBN'][0] : '',
+        'article_author' => isset($request['BibliographicInfo']['ArticleAuthor']) ? $request['BibliographicInfo']['ArticleAuthor'] : '',
+        'volume' => isset($request['BibliographicInfo']['Volume']) ? $request['BibliographicInfo']['Volume'] : '',
+        'issue' => isset($request['BibliographicInfo']['Issue']) ? $request['BibliographicInfo']['Issue'] : '',
+        'pages_requested' => isset($request['BibliographicInfo']['PagesRequested']) ? $request['BibliographicInfo']['PagesRequested'] : '',
+        'time_submitted' => strtotime($time_submitted),
+        'relais_request_id' => isset($response['RequestNumber']) ? $response['RequestNumber'] : '-1',
+        'relais_message' => $relais_message,
       ))->execute();
   } catch(Exception $e) {
     watchdog_exception('upei_roblib_ill',  $e, 'Error logging ILL request.', array(), WATCHDOG_ERROR);
