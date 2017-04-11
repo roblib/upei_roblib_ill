@@ -21,12 +21,8 @@ function upei_roblib_ill_clean_array($values) {
   if (isset($arr['ISBN'])) {
     $arr['ISBN'] = array($arr['ISBN']);
   }
-  //in some cases values need to moved to other fields or eliminated do that here
-  if(isset($arr['PagesRequested']) || isset($arr['ImageOrPageNumber'])) {
-    $arr['PagesRequested'] = $arr['ImageOrPageNumber'] . ' to ' .   $arr['PagesRequested'];
-    unset($arr['ImageOrPageNumber']);
-  }
   if(isset($arr['Genre']) && $arr['Genre'] == 'article' && isset($arr['Author'])) {
+    // We want ArticleAuthor
     unset($arr['Author']);
   }
   unset($arr['form_build_id']);

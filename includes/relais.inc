@@ -22,6 +22,8 @@ function upei_roblib_ill_add_request($form_state, $aid) {
   $relais_arr['DeliveryAddress'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_auth_form']);
   $request_info = upei_roblib_ill_request_info_array($relais_arr['BibliographicInfo'], $form_state['values']['notes']);
   $relais_arr['RequestInfo'] = $request_info;
+  $relais_arr['PublisherInfo']['PublicationDate'] = isset($form_state['storage']['upei_roblib_ill_request_form']['Date']) ?
+    $form_state['storage']['upei_roblib_ill_request_form']['Date'] : '';
   $relais_json = json_encode($relais_arr);
   $options = array(
     'method' => 'POST',

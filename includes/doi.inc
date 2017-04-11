@@ -77,7 +77,8 @@ function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
   $form['Date']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'year');
   $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title');
   $form['ImageOrPageNumber']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'first_page');
-  $form['PagesRequested']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'last_page');
+  $form['PagesRequested']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'first_page') . '-' .
+    upei_roblib_ill_get_xml_node($crossref_xml, 'last_page');
   $form['Volume']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'volume');
   $form['Issue']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'issue');
   foreach ($crossref_xml->getElementsbyTagName('person_name') as $person) {

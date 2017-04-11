@@ -283,8 +283,8 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     '#description' => 'Article or Chapter Title',
     '#size' => 50,
     '#states' => array(
-      'visible' => array(
-        ':input[name="Genre"]' => array('value' => 'article'),
+      'invisible' => array(
+        ':input[name="Genre"]' => array('value' => 'book'),
       ),
     ),
     '#required' => FALSE,
@@ -378,22 +378,11 @@ function upei_roblib_ill_request_form($form, &$form_state) {
       ),
     ),
   );
-  $form['ImageOrPageNumber'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Start Page'),
-    '#default_value' => upei_roblib_ill_get_request_variable('spage'),
-    '#size' => 50,
-    '#required' => FALSE,
-    '#states' => array(
-      'invisible' => array(
-        ':input[name="Genre"]' => array('value' => 'book'),
-      ),
-    ),
-  );
   $form['PagesRequested'] = array(
     '#type' => 'textfield',
-    '#title' => t('End Page'),
-    '#default_value' => upei_roblib_ill_get_request_variable('epage'),
+    '#title' => t('Pages'),
+    '#default_value' => upei_roblib_ill_get_request_variable('pages'),
+    '#description' => 'Pages requested (startpage-endpage)',
     '#size' => 50,
     '#required' => FALSE,
     '#states' => array(
