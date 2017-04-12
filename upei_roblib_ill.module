@@ -74,7 +74,6 @@ function upei_roblib_ill_views_data() {
     ),
   );
 
-
   $data['upei_roblib_ill_request']['id'] = array(
     'title' => t('Unique ID for an ILL request'),
     'help' => t('Unique ID for an ILL request.'),
@@ -380,7 +379,7 @@ function upei_roblib_ill_views_data() {
       'handler' => 'views_handler_argument_string',
     ),
   );
-  $data['upei_roblib_ill_request']['relais_failure_message'] = array(
+  $data['upei_roblib_ill_request']['relais_message'] = array(
     'title' => t('The reason a request failed. '),
     'help' => t('The reason a request failed.'),
     'field' => array(
