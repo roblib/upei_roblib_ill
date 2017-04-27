@@ -182,7 +182,7 @@ function upei_roblib_ill_auth_form($form, &$form_state) {
   );
   $form['LibraryName'] = array(
     '#type' => 'textfield',
-    '#title' => t('Name of Institution'),
+    '#title' => t('Name of Library'),
     '#size' => 50,
     '#default_value' => 'Robertson Library',
     '#required' => TRUE,

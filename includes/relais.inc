@@ -4,6 +4,16 @@
  * Contains the functions to send and receive data to/from Relais.
  */
 
+function upei_roblib_ill_get_pub_type($genre) {
+     switch ($genre) {
+       case 'book' :
+         return 'B';
+       case 'chapter' :
+         return 'I';
+       default :
+         return 'J';
+     }
+}
 /**
  * Submit an ILL AddRequest to relais.
  * @param array $form_state
@@ -24,6 +34,7 @@ function upei_roblib_ill_add_request($form_state, $aid) {
   $relais_arr['RequestInfo'] = $request_info;
   $relais_arr['PublisherInfo']['PublicationDate'] = isset($form_state['storage']['upei_roblib_ill_request_form']['Date']) ?
     $form_state['storage']['upei_roblib_ill_request_form']['Date'] : '';
+  $relais_arr['PublisherInfo']['PublicationType'] = upei_roblib_ill_get_pub_type($form_state['storage']['upei_roblib_ill_request_form']['Genre']);
   $relais_json = json_encode($relais_arr);
   $options = array(
     'method' => 'POST',
