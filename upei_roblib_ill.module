@@ -25,6 +25,14 @@ function upei_roblib_ill_menu() {
     'file' => 'includes/form.inc',
     'type' => MENU_NORMAL_ITEM,
   );
+  $items['upei/roblib/ill/finished'] = array(
+    'title' => 'UPEI ILL Request',
+    'description' => 'Redirect to this page after form is submitted',
+    'page callback' => 'upei_roblib_ill_form_redirect',
+    'access arguments' => array('access content'),
+    'file' => 'includes/form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
   return $items;
 }
 

@@ -45,23 +45,17 @@ function upei_roblib_ill_add_request($form_state, $aid) {
   if(!isset($aid) || is_array($aid)) {
     upei_roblib_ill_log_request($relais_arr, $aid);
     drupal_set_message(t('Error retrieving authentication token, @message', array('@message' => $aid['Problem']['Message'])), 'error');
-    return;
+    return array('ConfirmMessage' => $aid['Problem']['Message'] . ' You may have entered an incorrect Campus ID');
   }
   $result = drupal_http_request($url . '?aid=' . $aid, $options);
   module_load_include('inc', 'upei_roblib_ill', 'includes/db');
+  if(!isset($result->data)) {
+    return array('ConfirmMessage' => 'Error Communicating with Relais, no data returned.');
+  }
   $response_json = $result->data;
   $response_arr = json_decode($response_json, TRUE);
-  if ($result->code == '200') {
-    //TODO remove or improve the line below after testing
-    drupal_set_message('submitted request to relais' . $response_json);
-  }
-  else {
-    drupal_set_message(t('Error submitting request to relais, @code, @message', array(
-      '@code' => $result->code,
-      '@message' => $result->message
-    )), 'error');
-  }
   upei_roblib_ill_log_request($relais_arr, $response_arr);
+  return $response_arr;
 }
 
 /**
