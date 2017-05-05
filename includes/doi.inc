@@ -28,7 +28,6 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
     $crossref_xml = new DOMDocument('1.0');
     if (!$crossref_xml->loadXML($response->data)) {
       drupal_set_message(t('Error parseing DOI response, @msg'));
-      $form['doi']['#value'] = '';
       return $form;
     }
     else {
@@ -37,7 +36,6 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
   }
   else {
     drupal_set_message(t('Error retrieve data using DOI of @doi', array('@doi' => $doi)), 'error');
-    $form['doi']['#value'] = '';
     return $form;
   }
 }
@@ -91,7 +89,6 @@ function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
     }
   }
   $form['ArticleAuthor']['#value'] = $author;
-  $form['doi']['#value'] = '';
   return $form;
 }
 

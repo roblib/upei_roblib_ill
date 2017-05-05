@@ -25,6 +25,9 @@ function upei_roblib_ill_clean_array($values) {
     // We want ArticleAuthor
     unset($arr['Author']);
   }
+  if(isset($arr['doi'])) {
+    $arr['AdditionalNumbers'] = $arr['doi'];
+  }
   unset($arr['form_build_id']);
   unset($arr['form_token']);
   unset($arr['form_id']);
