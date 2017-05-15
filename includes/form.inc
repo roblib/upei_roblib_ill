@@ -37,6 +37,16 @@ function upei_roblib_ill_form($form, &$form_state) {
  *   An array containing the Drupal form state.
  */
 function upei_roblib_ill_form_validate($form, &$form_state) {
+  module_load_include('inc', 'upei_roblib_ill', 'includes/relais');
+  if ($form_state['step'] == 'upei_roblib_ill_auth_form') {
+    $aid = upei_roblib_ill_authenticate($form_state['values']['campus_id'], $form_state['values']['Surname']);
+    if (is_array($aid) && isset($aid['Problem']['Message'])) {
+      form_set_error('Surname', $aid['Problem']['Message']);
+    }
+    else {
+      $form_state['storage']['aid'] = $aid;
+    }
+  }
   if ($form_state['step'] == 'upei_roblib_ill_request_form' && empty($form_state['values']['doi']) && empty($form_state['values']['Title']) &&
     empty($form_state['values']['ArticleTitle'])
   ) {
@@ -54,7 +64,7 @@ function upei_roblib_ill_form_validate($form, &$form_state) {
  *   An array containing the Drupal form state.
  */
 function upei_roblib_ill_form_submit($form, &$form_state) {
-  module_load_include('inc', 'upei_roblib_ill', 'includes/relais');
+
   $form_state['storage'][$form_state['step']] = $form_state['values'];
   switch ($form_state['step']) {
     case 'upei_roblib_ill_request_form':
@@ -65,8 +75,7 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
       break;
     case 'upei_roblib_ill_auth_form':
       //process the form
-      $aid = upei_roblib_ill_authenticate($form_state['values']['campus_id']);
-      $response = upei_roblib_ill_add_request($form_state, $aid);
+      $response = upei_roblib_ill_add_request($form_state, $form_state['storage']['aid']);
       $form_state['redirect'] = array(
         'upei/roblib/ill/finished',
         array(
@@ -89,10 +98,8 @@ function upei_roblib_ill_form_redirect() {
   //TODO phone number, email etc. could be variables read from the database.
   $std_message = "<div class='upei-roblib-ill-message'>To contact the department about this request, you can send a message to <a href='mailto:ill@upei.ca'>ill@upei.ca</a> or 
 call 902-566-0445</div>";
-  return "<div class='upei-roblib-ill-relais-message'>" . $_GET['message'] . '</div>'. $std_message;
+  return "<div class='upei-roblib-ill-relais-message'>" . $_GET['message'] . '</div>' . $std_message;
 }
-
-
 
 
 /**
