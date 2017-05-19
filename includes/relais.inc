@@ -54,6 +54,7 @@ function upei_roblib_ill_add_request($form_state, $aid) {
   }
   $response_json = $result->data;
   $response_arr = json_decode($response_json, TRUE);
+  $response_arr['ConfirmMessage'] = isset($response_arr['Problem']['ErrorMessage']) ? $response_arr['Problem']['ErrorMessage'] : $response_arr['ConfirmMessage'];
   upei_roblib_ill_log_request($relais_arr, $response_arr);
   return $response_arr;
 }

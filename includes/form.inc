@@ -302,7 +302,7 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     '#default_value' => upei_roblib_ill_get_request_variable('title'),
     '#description' => 'Journal or Book Title',
     '#size' => 50,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
   $form['ArticleTitle'] = array(
     '#type' => 'textarea',
