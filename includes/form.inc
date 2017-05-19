@@ -195,22 +195,21 @@ function upei_roblib_ill_auth_form($form, &$form_state) {
     '#options' => $departments,
     '#required' => TRUE,
   );
-  $form['DeliveryAddress'] = array(
+  /*$form['DeliveryAddress'] = array(
     '#type' => 'textfield',
     '#title' => t('Your Email'),
     '#size' => 50,
-
     '#required' => TRUE,
-  );
+  );   */
   $form['InstitutionName'] = array(
-    '#type' => 'textfield',
+    '#type' => 'hidden',
     '#title' => t('Name of Institution'),
     '#size' => 50,
     '#default_value' => 'University of Prince Edward Island',
     '#required' => TRUE,
   );
   $form['LibraryName'] = array(
-    '#type' => 'textfield',
+    '#type' => 'hidden',
     '#title' => t('Name of Library'),
     '#size' => 50,
     '#default_value' => 'Robertson Library',
