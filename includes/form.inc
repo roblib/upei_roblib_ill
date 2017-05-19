@@ -42,6 +42,7 @@ function upei_roblib_ill_form_validate($form, &$form_state) {
     $aid = upei_roblib_ill_authenticate($form_state['values']['campus_id'], $form_state['values']['Surname']);
     if (is_array($aid) && isset($aid['Problem']['Message'])) {
       form_set_error('Surname', $aid['Problem']['Message']);
+      form_set_error('campus_id', '');
     }
     else {
       $form_state['storage']['aid'] = $aid;

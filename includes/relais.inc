@@ -86,7 +86,7 @@ function upei_roblib_ill_authenticate($barcode, $surname) {
   }
   $response_data = json_decode($result->data, TRUE);
   if ($result->code == '200') {
-    if (isset($response_data['Problem']) || $response_data['LastName'] !== $surname) {
+    if (isset($response_data['Problem']) || strtolower($response_data['LastName']) !== strtolower($surname)) {
       $err_message = isset($response_data['Problem']['Message']) ? $response_data['Problem']['Message'] : '';
       $err_message .= t( '  Your Campus ID could be incorrect or your Last Name does not match what is stored in the profile for the user with the specified Campus ID');
       $response_data['Problem']['Message'] = $err_message;
