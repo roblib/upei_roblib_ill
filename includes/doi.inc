@@ -20,6 +20,10 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
     $doi = 'Empty DOI';
   }
   $response = upei_roblib_ill_doi_load($doi);
+  if ($response->data && strpos($response->data, "Malformed DOI") !== FALSE) {
+    //try again without parsing the doi as sometimes parsing breaks it
+    $response = upei_roblib_ill_doi_load($doi, FALSE);
+  }
   $headers = array_change_key_case($response->headers);
   if ($response->data &&
     strpos($headers['content-type'], 'text/html') === FALSE &&
@@ -51,7 +55,7 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
  *   Returns the value of the element
  */
 function upei_roblib_ill_get_xml_node($crossref_xml, $node_name) {
-  return  empty($crossref_xml->getElementsbyTagName($node_name)->item(0)) ? '' :
+  return empty($crossref_xml->getElementsbyTagName($node_name)->item(0)) ? '' :
     $crossref_xml->getElementsbyTagName($node_name)->item(0)->nodeValue;
 }
 
@@ -119,13 +123,15 @@ function upei_roblib_ill_doi_name_from_url($doi_url) {
  * @param string $doi
  *   A DOI to lookop. May be provided with or without the "doi:" prefix. Can
  *   also pass a full DOI url (i.e, http://doi.org/10.1111/eva.12339 ).
+ * @param bool parse
+ *   parse the doi to remove prefix and whitespace etc.
  *
  * @return object
  *   An object as provided by drupal_http_request().
  */
-function upei_roblib_ill_doi_load($doi) {
+function upei_roblib_ill_doi_load($doi, $parse = TRUE) {
   // Allows for $id to pass a DOI url string or the DOI name.
-  $id = upei_roblib_ill_doi_name_from_url($doi);
+  $id = $parse ? upei_roblib_ill_doi_name_from_url($doi) : $doi;
   $openurl = variable_get('upei_roblib_ill_doi_openurl', 'http://www.crossref.org/openurl');
   $openurl_pid = variable_get('upei_roblib_ill_doi_openurl_pid', 'user@example.com');
   $url = url($openurl, array(
