@@ -48,10 +48,8 @@ function upei_roblib_ill_form_validate($form, &$form_state) {
       $form_state['storage']['aid'] = $aid;
     }
   }
-  if ($form_state['step'] == 'upei_roblib_ill_request_form' && empty($form_state['values']['doi']) && empty($form_state['values']['Title']) &&
-    empty($form_state['values']['ArticleTitle'])
-  ) {
-    form_set_error('Title', t('One of "DOI", "Title" or "Article Title" values must be provided'));
+  if ($form_state['step'] == 'upei_roblib_ill_request_form' && $form_state['triggering_element']['#value'] !== 'lookup DOI' && empty($form_state['values']['Title'])) {
+    form_set_error('Title', t('Source Title is required.'));
   }
 
 }
@@ -301,7 +299,7 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     '#default_value' => upei_roblib_ill_get_request_variable('title'),
     '#description' => 'Journal or Book Title',
     '#size' => 50,
-    '#required' => TRUE,
+    '#required' => FALSE,
   );
   $form['ArticleTitle'] = array(
     '#type' => 'textarea',
