@@ -14,27 +14,21 @@ function upei_roblib_ill_get_pub_type($genre) {
          return 'J';
      }
 }
+
 /**
  * Submit an ILL AddRequest to relais.
+ *
  * @param array $form_state
  *   A drupal form_state array
  * @param string $aid
  *   A relais authentication id (token)
+ * @return array|mixed
  */
 function upei_roblib_ill_add_request($form_state, $aid) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/db');
   module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
   $url = variable_get('upei_roblib_ill_add_url', 'https://caul-cbua.relais-host.com/portal-service/request/add');
-  $relais_arr = array(
-    "SupplyingLibrarySymbol" => variable_get('upei_roblib_ill_library_symbol','PCU'),
-  );
-  $relais_arr['BibliographicInfo'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
-  $relais_arr['DeliveryAddress'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_auth_form']);
-  $request_info = upei_roblib_ill_request_info_array($relais_arr['BibliographicInfo'], $form_state['values']['notes']);
-  $relais_arr['RequestInfo'] = $request_info;
-  $relais_arr['PublisherInfo']['PublicationDate'] = isset($form_state['storage']['upei_roblib_ill_request_form']['Date']) ?
-    $form_state['storage']['upei_roblib_ill_request_form']['Date'] : '';
-  $relais_arr['PublisherInfo']['PublicationType'] = upei_roblib_ill_get_pub_type($form_state['storage']['upei_roblib_ill_request_form']['Genre']);
+  $relais_arr = upei_roblib_ill_build_relais_arr($form_state);
   $relais_json = json_encode($relais_arr);
   $options = array(
     'method' => 'POST',
@@ -57,6 +51,25 @@ function upei_roblib_ill_add_request($form_state, $aid) {
   $response_arr['ConfirmMessage'] = isset($response_arr['Problem']['ErrorMessage']) ? $response_arr['Problem']['ErrorMessage'] : $response_arr['ConfirmMessage'];
   upei_roblib_ill_log_request($relais_arr, $response_arr);
   return $response_arr;
+}
+
+/**
+ * @param $form_state
+ * @return array
+ */
+function upei_roblib_ill_build_relais_arr($form_state) {
+  module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
+  $relais_arr = array(
+    "SupplyingLibrarySymbol" => variable_get('upei_roblib_ill_library_symbol','PCU'),
+  );
+  $relais_arr['BibliographicInfo'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
+  $relais_arr['DeliveryAddress'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_auth_form']);
+  $request_info = upei_roblib_ill_request_info_array($relais_arr['BibliographicInfo'], $form_state['values']['notes']);
+  $relais_arr['RequestInfo'] = $request_info;
+  $relais_arr['PublisherInfo']['PublicationDate'] = isset($form_state['storage']['upei_roblib_ill_request_form']['Date']) ?
+    $form_state['storage']['upei_roblib_ill_request_form']['Date'] : '';
+  $relais_arr['PublisherInfo']['PublicationType'] = upei_roblib_ill_get_pub_type($form_state['storage']['upei_roblib_ill_request_form']['Genre']);
+  return $relais_arr;
 }
 
 /**

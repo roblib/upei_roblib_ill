@@ -41,7 +41,7 @@ function upei_roblib_ill_schema() {
         'description' => 'The email address of the user that submitted the request',
         'type' => 'varchar',
         'length' => '255',
-        'not null' => TRUE,
+        'not null' => FALSE,
       ),
       'patron_lastname' => array(
         'description' => 'Lastname of the user that submitted the request',
@@ -132,6 +132,12 @@ function upei_roblib_ill_schema() {
         'type' => 'varchar',
         'length' => '30',
         'not null' => TRUE,
+      ),
+      'doi' => array(
+        'description' => 'The DOI',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => FALSE,
       ),
       'relais_request_id' => array(
         'description' => 'The request id stored in the Relais datbabase',

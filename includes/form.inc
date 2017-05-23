@@ -43,6 +43,11 @@ function upei_roblib_ill_form_validate($form, &$form_state) {
     if (is_array($aid) && isset($aid['Problem']['Message'])) {
       form_set_error('Surname', $aid['Problem']['Message']);
       form_set_error('campus_id', '');
+      // Log invalid requests, we need to build the full array here to log it, even though we won't send it yet as auth has failed.
+      $form_state['storage']['upei_roblib_ill_auth_form'] = $form_state['values'];
+      module_load_include('inc', 'upei_roblib_ill', 'includes/db');
+      $arr = upei_roblib_ill_build_relais_arr($form_state);
+      upei_roblib_ill_log_request($arr, $aid);
     }
     else {
       $form_state['storage']['aid'] = $aid;
@@ -95,7 +100,7 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
 function upei_roblib_ill_form_redirect() {
   //TODO turn this into a drupal render array
   //TODO phone number, email etc. could be variables read from the database.
-  $std_message = "<div class='upei-roblib-ill-message'>To contact the department about this request, you can send a message to <a href='mailto:ill@upei.ca'>ill@upei.ca</a> or 
+  $std_message = "<div class='upei-roblib-ill-email'>A message including the Request ID has been sent to your UPEI email address.</div><div class='upei-roblib-ill-message'>To contact the department about this request, you can send a message to <a href='mailto:ill@upei.ca'>ill@upei.ca</a> or 
 call 902-566-0445</div>";
   return "<div class='upei-roblib-ill-relais-message'>" . $_GET['message'] . '</div>' . $std_message;
 }

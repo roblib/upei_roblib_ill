@@ -36,6 +36,13 @@ function upei_roblib_ill_menu() {
   return $items;
 }
 
+/**
+ * Get the metadata associated with this DOI.
+ *
+ * @param $form
+ * @param $form_state
+ * @return array
+ */
 function upei_roblib_ill_doi_callback($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/doi');
   $form = upei_roblib_ill_doi_get_data($form, $form_state['values']['doi']);
@@ -356,6 +363,23 @@ function upei_roblib_ill_views_data() {
   $data['upei_roblib_ill_request']['genre'] = array(
     'title' => t('Article or Chapter author'),
     'help' => t('Article or Chapter author.'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_string',
+    ),
+  );
+  $data['upei_roblib_ill_request']['doi'] = array(
+    'title' => t('DOI'),
+    'help' => t('DOI.'),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,

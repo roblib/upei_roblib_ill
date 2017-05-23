@@ -26,6 +26,7 @@ function upei_roblib_ill_log_request($request, $response) {
         //'patron_email' => $request['DeliveryAddress']['DeliveryAddress'],
         'notes' => isset($request['DeliveryAddress']['notes']) ? $request['DeliveryAddress']['notes'] : '',
         'genre' => isset($request['BibliographicInfo']['Genre']) ? $request['BibliographicInfo']['Genre'] : '',
+        'doi' => isset($request['BibliographicInfo']['AdditionalNumbers']) ? $request['BibliographicInfo']['AdditionalNumbers'] : '',
         'author' => isset($request['BibliographicInfo']['Author']) ? $request['BibliographicInfo']['Author'] : '',
         'citation_date' => isset($request['BibliographicInfo']['Date']) ? $request['BibliographicInfo']['Date'] : '',
         'title' => isset($request['BibliographicInfo']['Title']) ? $request['BibliographicInfo']['Title'] : '',
