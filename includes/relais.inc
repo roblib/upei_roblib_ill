@@ -64,6 +64,8 @@ function upei_roblib_ill_build_relais_arr($form_state) {
   );
   $relais_arr['BibliographicInfo'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
   $relais_arr['DeliveryAddress'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_auth_form']);
+  $relais_arr['ElectronicDelivery']['DeliveryAddress'] = $relais_arr['ElectronicDelivery']['MessagingAddress'] =
+    $relais_arr['DeliveryAddress']['DeliveryAddress'];
   $request_info = upei_roblib_ill_request_info_array($relais_arr['BibliographicInfo'], $form_state['values']['notes']);
   $relais_arr['RequestInfo'] = $request_info;
   $relais_arr['PublisherInfo']['PublicationDate'] = isset($form_state['storage']['upei_roblib_ill_request_form']['Date']) ?

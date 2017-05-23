@@ -198,12 +198,12 @@ function upei_roblib_ill_auth_form($form, &$form_state) {
     '#options' => $departments,
     '#required' => TRUE,
   );
-  /*$form['DeliveryAddress'] = array(
+  $form['DeliveryAddress'] = array(
     '#type' => 'textfield',
     '#title' => t('Your Email'),
     '#size' => 50,
     '#required' => TRUE,
-  );   */
+  );
   $form['InstitutionName'] = array(
     '#type' => 'hidden',
     '#title' => t('Name of Institution'),
