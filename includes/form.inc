@@ -39,6 +39,9 @@ function upei_roblib_ill_form($form, &$form_state) {
 function upei_roblib_ill_form_validate($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/relais');
   if ($form_state['step'] == 'upei_roblib_ill_auth_form') {
+    if (!valid_email_address($form_state['values']['DeliveryAddress'])) {
+      form_set_error('DeliveryAddress', t('Your email address appears to be invalid.'));
+    }
     $aid = upei_roblib_ill_authenticate($form_state['values']['campus_id'], $form_state['values']['Surname']);
     if (is_array($aid) && isset($aid['Problem']['Message'])) {
       form_set_error('Surname', $aid['Problem']['Message']);
@@ -80,11 +83,8 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
     case 'upei_roblib_ill_auth_form':
       //process the form
       $response = upei_roblib_ill_add_request($form_state, $form_state['storage']['aid']);
-      if(!isset($response['RequestNumber'])) {
-        $error = 'FALSE';
-      } else {
-        $error = 'TRUE';
-      }
+      $error = isset($response['RequestNumber']) ? 'FALSE' : 'TRUE';
+
       $form_state['redirect'] = array(
         'upei/roblib/ill/finished',
         array(
@@ -107,8 +107,15 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
 function upei_roblib_ill_form_redirect() {
   //TODO turn this into a drupal render array
   //TODO phone number, email etc. could be variables read from the database.
-  $std_message = "<div class='upei-roblib-ill-email'>A message including the Request ID has been sent to " . $_GET['email'] . ".</div><div class='upei-roblib-ill-message'>To contact the department about this request, you can send a message to <a href='mailto:ill@upei.ca'>ill@upei.ca</a> or 
+  if (isset($_GET['error']) && $_GET['error'] === 'TRUE') {
+    $std_message = "<div class='upei-roblib-ill-message'>To contact the department about this request, you can send a message to <a href='mailto:ill@upei.ca'>ill@upei.ca</a> or 
 call 902-566-0445</div>";
+  }
+  else {
+    $std_message = "<div class='upei-roblib-ill-email'>A message including the Request ID has been sent to " . $_GET['email'] . ".</div><div class='upei-roblib-ill-message'>To contact the department about this request, you can send a message to <a href='mailto:ill@upei.ca'>ill@upei.ca</a> or 
+call 902-566-0445</div>
+<div class='upei-roblib-ill-wecanhelp'>We can help! Please contact your <a href='http://library.upei.ca/librarians'>subject-specific</a> librarian if you'd like help finding more resources relating to your topic.</div>";
+  }
   return "<div class='upei-roblib-ill-relais-message'>" . $_GET['message'] . '</div>' . $std_message;
 }
 
