@@ -108,18 +108,42 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
  *   a string of HTML to display including the results of the ILL request and some boilerplate text.
  */
 function upei_roblib_ill_form_redirect() {
-  //TODO turn this into a drupal render array
   //TODO phone number, email etc. could be variables read from the database.
-  if (isset($_GET['error']) && $_GET['error'] === 'TRUE') {
-    $std_message = "<div class='upei-roblib-ill-message'>To contact the department about this request, you can send a message to <a href='mailto:ill@upei.ca'>ill@upei.ca</a> or 
-call 902-566-0445</div>";
+  $librarian_link = l(t('subject-specific'), 'http://library.upei.ca/librarians', array('html' => TRUE));
+  $help_message = t("We can help! Please contact your !librarian_link librarian if you'd like help finding more resources relating to your topic.",
+    array('!librarian_link' => $librarian_link));
+  $standard_message = t("To contact the department about this request, you can send a message to ill@upei.ca or 
+call 902-566-0445.");
+  if (isset($_GET['error']) && $_GET['error'] === 'FALSE') {
+    $standard_message =  t("A message including the Request ID has been sent to @email.", array(
+      '@email' => $_GET['email'],
+    )) . $standard_message;
   }
-  else {
-    $std_message = "<div class='upei-roblib-ill-email'>A message including the Request ID has been sent to " . $_GET['email'] . ".</div><div class='upei-roblib-ill-message'>To contact the department about this request, you can send a message to <a href='mailto:ill@upei.ca'>ill@upei.ca</a> or 
-call 902-566-0445</div>
-<div class='upei-roblib-ill-wecanhelp'>We can help! Please contact your <a href='http://library.upei.ca/librarians'>subject-specific</a> librarian if you'd like help finding more resources relating to your topic.</div>";
-  }
-  return "<div class='upei-roblib-ill-relais-message'>" . $_GET['message'] . '</div>' . $std_message;
+
+  $output = array(
+    '#prefix' => '<div upei-roblib-ill-content>',
+    '#suffix' => '</div>',
+    'dynamic_message' => array(
+      '#type' => 'markup',
+      '#markup' => $_GET['message'],
+      '#prefix' => '<div class="upei-roblib-ill-message">',
+      '#suffix' => '</div>',
+    ),
+    'standard_message' => array(
+      '#type' => 'markup',
+      '#markup' => $standard_message,
+      '#prefix' => '<div class="upei-roblib-ill-email">',
+      '#suffix' => '</div>',
+    ),
+    'help_message' => array(
+      '#type' => 'markup',
+      '#markup' => $help_message,
+      '#allowed_tags' => ['a', 'source'],
+      '#prefix' => '<div class="upei-roblib-ill-help">',
+      '#suffix' => '</div>',
+    ),
+  );
+  return drupal_render($output);
 }
 
 
