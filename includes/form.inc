@@ -42,6 +42,9 @@ function upei_roblib_ill_form_validate($form, &$form_state) {
     if (!valid_email_address($form_state['values']['DeliveryAddress'])) {
       form_set_error('DeliveryAddress', t('Your email address appears to be invalid.'));
     }
+    if (!$form_state['values']['certify']) {
+      form_set_error('certify', t('Please certify that this is item is being sought for a fair dealing purpose'));
+    }
     $aid = upei_roblib_ill_authenticate($form_state['values']['campus_id'], $form_state['values']['Surname']);
     if (is_array($aid) && isset($aid['Problem']['Message'])) {
       form_set_error('Surname', $aid['Problem']['Message']);
@@ -86,7 +89,7 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
       $error = isset($response['RequestNumber']) ? 'FALSE' : 'TRUE';
 
       $form_state['redirect'] = array(
-        'upei/roblib/ill/finished',
+        '/upei/roblib/ill/finished',
         array(
           'query' => array(
             'message' => $response['ConfirmMessage'],
@@ -239,6 +242,7 @@ function upei_roblib_ill_auth_form($form, &$form_state) {
     '#required' => FALSE,
   );
   $form['certify'] = array(
+    '#title' => t('I certify'),
     '#type' => 'checkbox',
     '#description' => 'I hereby certify that this item is being sought for a fair dealing purpose and any copying will be in accordance with the Copyright Act. ',
     '#size' => 50,
