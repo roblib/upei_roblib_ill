@@ -37,6 +37,7 @@ function upei_roblib_ill_clean_array($values) {
   unset($arr['certify']);
   unset($arr['doi']);
   unset($arr['doi_button']);
+  unset($arr['honeypot_time']);
   return $arr;
 }
 
