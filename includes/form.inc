@@ -115,7 +115,7 @@ function upei_roblib_ill_form_redirect() {
   $standard_message = t("To contact the department about this request, you can send a message to ill@upei.ca or 
 call 902-566-0445.");
   if (isset($_GET['error']) && $_GET['error'] === 'FALSE') {
-    $standard_message =  t("A message including the Request ID has been sent to @email.", array(
+    $standard_message =  t("A message including the Request ID has been sent to @email.  ", array(
       '@email' => $_GET['email'],
     )) . $standard_message;
   }
@@ -344,7 +344,7 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     '#rows' => 2,
     '#title' => t('Source Title'),
     '#default_value' => upei_roblib_ill_get_request_variable('title'),
-    '#description' => 'Journal or Book Title',
+    '#description' => 'Journal or Book Title (Required)',
     '#size' => 50,
     '#required' => FALSE,
   );

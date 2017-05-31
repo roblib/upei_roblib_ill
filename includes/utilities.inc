@@ -21,11 +21,11 @@ function upei_roblib_ill_clean_array($values) {
   if (isset($arr['ISBN'])) {
     $arr['ISBN'] = array($arr['ISBN']);
   }
-  if(isset($arr['Genre']) && $arr['Genre'] == 'article' && isset($arr['Author'])) {
+  if (isset($arr['Genre']) && $arr['Genre'] == 'article' && isset($arr['Author'])) {
     // We want ArticleAuthor
     unset($arr['Author']);
   }
-  if(isset($arr['doi'])) {
+  if (isset($arr['doi'])) {
     $arr['AdditionalNumbers'] = $arr['doi'];
   }
   unset($arr['form_build_id']);
@@ -54,6 +54,10 @@ function upei_roblib_ill_get_request_variable($variable) {
     $initial = isset($_REQUEST['auinit']) ? $_REQUEST['auinit'] : NULL;
     $last_name = isset($_REQUEST['aulast']) ? $_REQUEST['aulast'] : NULL;
     return !empty($last_name) ? $last_name . ',' . $initial : '';
+  }
+  if ($variable == 'issn' && !empty($_REQUEST[$variable])) {
+    // ebsco sometimes sends garbage as issns verify this is a valid issn before displaying the value in the form.
+    return preg_match('/^\d{4}-?\d{3}[\dxX]$/', $_REQUEST[$variable]) ? $_REQUEST[$variable] : '';
   }
   return isset($_REQUEST[$variable]) ? $_REQUEST[$variable] : '';
 }
@@ -89,10 +93,10 @@ function upei_roblib_ill_request_info_array($values, $notes) {
  * @return string
  */
 function upei_roblib_format_biblio_info($form_state) {
-  $data =  upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
+  $data = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
   $rows = array();
-  foreach($data as $key => $value) {
-    if($key == 'ISSN' || $key == 'ISBN') {
+  foreach ($data as $key => $value) {
+    if ($key == 'ISSN' || $key == 'ISBN') {
       $value = reset($value);
     }
     array_push($rows, array($key, $value));
