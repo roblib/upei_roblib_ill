@@ -108,12 +108,13 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
  *   a string of HTML to display including the results of the ILL request and some boilerplate text.
  */
 function upei_roblib_ill_form_redirect() {
-  //TODO phone number, email etc. could be variables read from the database.
+  $contact_email = variable_get('upei_roblib_ill_contact_email', 'ill@upei.ca');
+  $contact_phone_number = variable_get('upei_roblib_ill_contact_phone', '902-566-0445');
   $librarian_link = l(t('subject-specific'), 'http://library.upei.ca/librarians', array('html' => TRUE));
   $help_message = t("We can help! Please contact your !librarian_link librarian if you'd like help finding more resources relating to your topic.",
     array('!librarian_link' => $librarian_link));
-  $standard_message = t("To contact the department about this request, you can send a message to ill@upei.ca or 
-call 902-566-0445.");
+  $standard_message = t("To contact the department about this request, you can send a message to @email or 
+call @phone.", array('@phone' => $contact_phone_number, '@email' => $contact_email));
   if (isset($_GET['error']) && $_GET['error'] === 'FALSE') {
     $standard_message =  t("A message including the Request ID has been sent to @email.  ", array(
       '@email' => $_GET['email'],

@@ -50,6 +50,23 @@ function upei_roblib_ill_admin_form($form, &$form_state) {
     '#description' => t('An identifier to call yourself, for the OpenURL endpoint. To use this service you first need to register for an account here: http://www.crossref.org/requestaccount/'),
     '#default_value' => variable_get('upei_roblib_ill_doi_openurl_pid'),
   );
+  $form['upei_roblib_ill_contact_email'] = array(
+    '#required' => TRUE,
+    '#type' => 'textfield',
+    '#size' => 200,
+    '#title' => t('Contact Email'),
+    '#description' => t('The email address we want to show after a user has submitted an ILL request'),
+    '#default_value' => variable_get('upei_roblib_ill_contact_email', 'ill@upei.ca'),
+  );
+  $form['upei_roblib_ill_contact_phone'] = array(
+    '#required' => TRUE,
+    '#type' => 'textfield',
+    '#size' => 200,
+    '#title' => t('Contact Phone Number'),
+    '#description' => t('The phone number we want to show to the user after a user has submitted an ILL request'),
+    '#default_value' => variable_get('upei_roblib_ill_contact_phone', '902-566-0445'),
+  );
+
 
   return system_settings_form($form);
 

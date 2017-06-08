@@ -14,6 +14,8 @@ function upei_roblib_ill_uninstall() {
     'upei_roblib_ill_auth_url',
     'upei_roblib_ill_relais_key',
     'upei_roblib_ill_library_symbol',
+    'upei_roblib_ill_contact_email',
+    'upei_roblib_ill_contact_phonel',
   );
   array_walk($variables, 'variable_del');
 }
