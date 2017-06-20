@@ -54,9 +54,10 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
  * @return string
  *   Returns the value of the element
  */
-function upei_roblib_ill_get_xml_node($crossref_xml, $node_name) {
-  return empty($crossref_xml->getElementsbyTagName($node_name)->item(0)) ? '' :
-    $crossref_xml->getElementsbyTagName($node_name)->item(0)->nodeValue;
+function upei_roblib_ill_get_xml_node($crossref_xml, $node_name, $index = 0) {
+  // TODO rewrite this function to use full xpath
+  return empty($crossref_xml->getElementsbyTagName($node_name)->item($index)) ? '' :
+    $crossref_xml->getElementsbyTagName($node_name)->item($index)->nodeValue;
 }
 
 
@@ -74,10 +75,15 @@ function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
   if (empty($full_title)) {
     $full_title = upei_roblib_ill_get_xml_node($crossref_xml, 'conference_name');
   }
+  $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title');
+  if (empty($full_title)) {
+    $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title',1);
+    $full_title = upei_roblib_ill_get_xml_node($crossref_xml, 'title' , 0);
+  }
   $form['Title']['#value'] = $full_title;
   $form['ISSN']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'issn');
   $form['Date']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'year');
-  $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title');
+
   $form['ImageOrPageNumber']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'first_page');
   $form['PagesRequested']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'first_page') . '-' .
     upei_roblib_ill_get_xml_node($crossref_xml, 'last_page');
