@@ -299,7 +299,6 @@ function upei_roblib_ill_request_form($form, &$form_state) {
   $form['#prefix'] = '<div id="upei-roblib-ill-request-form">';
   $form['#suffix'] = '</div>';
   $genre = empty(upei_roblib_ill_get_request_variable('genre')) ? 'article' : upei_roblib_ill_get_request_variable('genre');
-//$values = isset($form_state['multistep_values']['upei_roblib_ill_request']) ? orm_state['multistep_values']['ra$fte_the_room'] : array();
   $form['Genre'] = array(
     '#type' => 'select',
     '#title' => t('Genre'),
@@ -376,10 +375,11 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     ),
     '#required' => FALSE,
   );
+  $article_author = ($genre == 'book') ? '' : upei_roblib_ill_get_request_variable('author');
   $form['ArticleAuthor'] = array(
     '#type' => 'textfield',
     '#title' => t('Author'),
-    '#default_value' => upei_roblib_ill_get_request_variable('author'),
+    '#default_value' => $article_author,
     '#size' => 50,
     '#required' => FALSE,
     '#description' => 'Article or Chapter Author',
@@ -389,10 +389,11 @@ function upei_roblib_ill_request_form($form, &$form_state) {
       ),
     ),
   );
+  $author = ($genre == 'book') ? upei_roblib_ill_get_request_variable('author') : '';
   $form['Author'] = array(
     '#type' => 'textfield',
     '#title' => t('Book Author'),
-    '#default_value' => upei_roblib_ill_get_request_variable('author'),
+    '#default_value' => $author,
     '#size' => 50,
     '#required' => FALSE,
     '#states' => array(

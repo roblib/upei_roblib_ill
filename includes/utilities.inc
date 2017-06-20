@@ -21,9 +21,17 @@ function upei_roblib_ill_clean_array($values) {
   if (isset($arr['ISBN'])) {
     $arr['ISBN'] = array($arr['ISBN']);
   }
-  if (isset($arr['Genre']) && $arr['Genre'] == 'article' && isset($arr['Author'])) {
+  if (isset($arr['Genre']) && ($arr['Genre'] == 'article' || $arr['Genre'] == 'chapter') && isset($arr['Author'])) {
     // We want ArticleAuthor
     unset($arr['Author']);
+  }
+  if (isset($arr['Genre']) && $arr['Genre'] == 'book' && isset($arr['ArticleAuthor'])) {
+    // We want Author
+    unset($arr['ArticleAuthor']);
+  }
+  if (isset($arr['Genre']) && $arr['Genre'] == 'book' && isset($arr['ArticleTitle'])) {
+    // We want Title only
+    unset($arr['ArticleTitle']);
   }
   if (isset($arr['doi'])) {
     $arr['AdditionalNumbers'] = $arr['doi'];
@@ -60,6 +68,10 @@ function upei_roblib_ill_get_request_variable($variable) {
     // ebsco sometimes sends garbage as issns verify this is a valid issn before displaying the value in the form.
     return preg_match('/^\d{4}-?\d{3}[\dxX]$/', $_REQUEST[$variable]) ? $_REQUEST[$variable] : '';
   }
+  // ebsco sometimes returns bookitem we only understand chapter
+  if(($variable == 'genre' && !empty($_REQUEST[$variable])) && $_REQUEST[$variable] == 'bookitem') {
+    return 'chapter';
+  }
   return isset($_REQUEST[$variable]) ? $_REQUEST[$variable] : '';
 }
 
@@ -75,7 +87,7 @@ function upei_roblib_ill_request_info_array($values, $notes) {
   $genre = $values['Genre'];
   $requestInfo['DateSubmitted'] = date('Y-m-d H:i:s');
   $requestInfo['Notes'] = $notes;
-  if ($genre == 'book' || $genre == 'chapter') {
+  if ($genre == 'book') {
     $requestInfo['ServiceType'] = 'L';
     $requestInfo['ServiceLabel'] = "R";
     //$requestInfo['RequestSource'] = "C";

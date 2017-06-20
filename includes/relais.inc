@@ -62,15 +62,19 @@ function upei_roblib_ill_build_relais_arr($form_state) {
   $relais_arr = array(
     "SupplyingLibrarySymbol" => variable_get('upei_roblib_ill_library_symbol','PCU'),
   );
+  $pub_type = upei_roblib_ill_get_pub_type($form_state['storage']['upei_roblib_ill_request_form']['Genre']);
   $relais_arr['BibliographicInfo'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
   $relais_arr['DeliveryAddress'] = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_auth_form']);
-  $relais_arr['ElectronicDelivery']['DeliveryAddress'] = $relais_arr['ElectronicDelivery']['MessagingAddress'] =
-    $relais_arr['DeliveryAddress']['DeliveryAddress'];
+  if($pub_type != 'B') {
+    // this is not a book but is a journal or chapter we will send electronically and as copy
+    $relais_arr['ElectronicDelivery']['DeliveryAddress'] = $relais_arr['ElectronicDelivery']['MessagingAddress'] =
+      $relais_arr['DeliveryAddress']['DeliveryAddress'];
+  }
   $request_info = upei_roblib_ill_request_info_array($relais_arr['BibliographicInfo'], $form_state['values']['notes']);
   $relais_arr['RequestInfo'] = $request_info;
   $relais_arr['PublisherInfo']['PublicationDate'] = isset($form_state['storage']['upei_roblib_ill_request_form']['Date']) ?
     $form_state['storage']['upei_roblib_ill_request_form']['Date'] : '';
-  $relais_arr['PublisherInfo']['PublicationType'] = upei_roblib_ill_get_pub_type($form_state['storage']['upei_roblib_ill_request_form']['Genre']);
+  $relais_arr['PublisherInfo']['PublicationType'] = $pub_type;
   return $relais_arr;
 }
 
