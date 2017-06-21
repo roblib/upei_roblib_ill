@@ -95,11 +95,12 @@ function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
     upei_roblib_ill_get_xml_node($crossref_xml, 'last_page');
   $form['Volume']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'volume');
   $form['Issue']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'issue');
+  $form['ISBN']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'isbn');
   foreach ($crossref_xml->getElementsbyTagName('person_name') as $person) {
     if ($person->getAttribute('contributor_role') == 'author' &&
       $person->getAttribute('sequence') == 'first'
     ) {
-      $author = upei_roblib_ill_get_xml_node($crossref_xml, 'surname') . ',' . upei_roblib_ill_get_xml_node($crossref_xml, 'given_name');
+      $author = upei_roblib_ill_get_xml_node($person, 'surname') . ',' . upei_roblib_ill_get_xml_node($person, 'given_name');
     }
   }
   $form['ArticleAuthor']['#value'] = $author;
