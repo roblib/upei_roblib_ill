@@ -51,6 +51,8 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
  *   The Crossref XML
  * @param string $node_name
  *   The node we want a value for, we are assuming the xml only has one node with the given name.
+ * @param int $index
+ *   If there are more than one element we can ask for the value of each element
  * @return string
  *   Returns the value of the element
  */
@@ -77,7 +79,11 @@ function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
   }
   $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title');
   if (empty($full_title)) {
+    $form['Genre']['#value'] = 'book';
     $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title',1);
+    if(isset($form['ArticleTitle']['#value'])) {
+      $form['Genre']['#value'] = 'chapter';
+    }
     $full_title = upei_roblib_ill_get_xml_node($crossref_xml, 'title' , 0);
   }
   $form['Title']['#value'] = $full_title;
@@ -90,8 +96,6 @@ function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
   $form['Volume']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'volume');
   $form['Issue']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'issue');
   foreach ($crossref_xml->getElementsbyTagName('person_name') as $person) {
-    $role = $person->getAttribute('contributor_role');
-    $sequence = $person->getAttribute('sequence');
     if ($person->getAttribute('contributor_role') == 'author' &&
       $person->getAttribute('sequence') == 'first'
     ) {
