@@ -21,7 +21,8 @@ function upei_roblib_ill_clean_array($values) {
   if (isset($arr['ISBN'])) {
     $arr['ISBN'] = array($arr['ISBN']);
   }
-  if (isset($arr['Genre']) && ($arr['Genre'] == 'article' || $arr['Genre'] == 'chapter') && isset($arr['Author'])) {
+  // The below checks are due to ebscos habit of sending sending the same info in both atitle and title etc.
+  if (isset($arr['Genre']) && $arr['Genre'] == 'article' && isset($arr['Author'])) {
     // We want ArticleAuthor
     unset($arr['Author']);
   }

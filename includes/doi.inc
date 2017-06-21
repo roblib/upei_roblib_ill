@@ -100,10 +100,16 @@ function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
     if ($person->getAttribute('contributor_role') == 'author' &&
       $person->getAttribute('sequence') == 'first'
     ) {
+      $article_author = upei_roblib_ill_get_xml_node($person, 'surname') . ',' . upei_roblib_ill_get_xml_node($person, 'given_name');
+    }
+    if ($person->getAttribute('contributor_role') == 'editor' &&
+      $person->getAttribute('sequence') == 'first'
+    ) {
       $author = upei_roblib_ill_get_xml_node($person, 'surname') . ',' . upei_roblib_ill_get_xml_node($person, 'given_name');
     }
   }
-  $form['ArticleAuthor']['#value'] = $author;
+  $form['ArticleAuthor']['#value'] = $article_author;
+  $form['Author']['#value'] = $author;
   return $form;
 }
 
