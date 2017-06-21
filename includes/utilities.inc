@@ -5,6 +5,20 @@
  */
 
 /**
+ * Clean the form content before sending it to relais or logging it.
+ *
+ * @param $value
+ * @param $key
+ */
+function upei_roblib_ill_check_arr_item(&$value, $key) {
+  if(is_array($value)) {
+    array_walk($value, 'upei_roblib_ill_check_arr_item');
+  } else {
+    $value = check_plain($value);
+  }
+}
+
+/**
  * Removes empty elements and drupal specific elements from an array
  *
  * @param $values
@@ -47,6 +61,7 @@ function upei_roblib_ill_clean_array($values) {
   unset($arr['doi']);
   unset($arr['doi_button']);
   unset($arr['honeypot_time']);
+  array_walk($arr, 'upei_roblib_ill_check_arr_item');
   return $arr;
 }
 
