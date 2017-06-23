@@ -313,7 +313,7 @@ function upei_roblib_ill_request_form($form, &$form_state) {
   $form['doi'] = array(
     '#type' => 'textfield',
     '#title' => t('DOI'),
-    '#default_value' => upei_roblib_ill_get_request_variable('doi'),
+    '#default_value' => upei_roblib_ill_get_doi_from_request(),
     '#description' => 'DOI, if you provide a DOI we will attempt to lookup the record for you',
     '#size' => 50,
     '#states' => array(

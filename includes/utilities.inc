@@ -91,6 +91,17 @@ function upei_roblib_ill_get_request_variable($variable) {
   return isset($_REQUEST[$variable]) ? $_REQUEST[$variable] : '';
 }
 
+function upei_roblib_ill_get_doi_from_request() {
+  return (!empty($_REQUEST['doi'])) ? $_REQUEST['doi'] : upei_roblib_ill_get_doi_from_id();
+}
+
+function upei_roblib_ill_get_doi_from_id() {
+  if(!empty($_REQUEST['ID'])) {
+    return (strpos($_REQUEST['ID'], 'doi:') !== 0) ? '' : $_REQUEST['ID'];
+  }
+  return '';
+}
+
 /**
  * Populates the requestInfo portion of a Relais request
  * @param array $values
