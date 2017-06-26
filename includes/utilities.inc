@@ -14,7 +14,7 @@ function upei_roblib_ill_check_arr_item(&$value, $key) {
   if(is_array($value)) {
     array_walk($value, 'upei_roblib_ill_check_arr_item');
   } else {
-    $value = check_plain($value);
+    $value = filter_xss($value);
   }
 }
 
