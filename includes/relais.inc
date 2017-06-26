@@ -120,9 +120,10 @@ function upei_roblib_ill_build_err_msg($msg_from_server) {
   $campus_id = l(t('Campus ID'), 'http://www.upei.ca/vpaf/campuscard');
   $ill_email = l(t('ill@upei.ca'), 'mailto:ill@upei.ca');
   $phone = l(t('902-566-0583'), 'tel:902-566-0353');
+  $server_response = !empty($msg_from_server) ? 'Server Response: ' . $msg_from_server : '';
   return t('Oops. Something went wrong.<br />Check the "Your Last Name" and "Your Campus ID" fields - those two need to match what is on file
 . (Your !campus_id appears as the NUMBER near the middle of your campus card).  If you do not have a !campus_id, please contact the Robertson Library Service Desk, or, 
-call !phone.  Note: if you are a student taking online courses only, please email !ill_email.<br />Server response: @msg_from_server',
-    array('!campus_id' => $campus_id, '!ill_email' => $ill_email, '!phone' => $phone, '@msg_from_server' => $msg_from_server));
+call !phone.  Note: if you are a student taking online courses only, please email !ill_email.<br />@msg_from_server',
+    array('!campus_id' => $campus_id, '!ill_email' => $ill_email, '!phone' => $phone, '@msg_from_server' => $server_response));
 }
 
