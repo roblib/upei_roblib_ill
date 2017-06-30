@@ -5,34 +5,34 @@
  */
 function upei_roblib_ill_menu() {
 
-  $items = array();
+  $items = [];
 
-  $items['admin/settings/roblibill'] = array(
+  $items['admin/settings/roblibill'] = [
     'title' => 'UPEI Roblib ILL settings',
     'description' => 'Conifiguration for the UPEI ILL forms',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('upei_roblib_ill_admin_form'),
-    'access arguments' => array('access administration pages'),
+    'page arguments' => ['upei_roblib_ill_admin_form'],
+    'access arguments' => ['access administration pages'],
     'file' => 'includes/admin.form.inc',
     'type' => MENU_NORMAL_ITEM,
-  );
-  $items['upei/roblib/ill'] = array(
+  ];
+  $items['upei/roblib/ill'] = [
     'title' => 'UPEI ILL Form',
     'description' => 'The entry point for the UPEI ILL forms',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('upei_roblib_ill_form'),
-    'access arguments' => array('access content'),
+    'page arguments' => ['upei_roblib_ill_form'],
+    'access arguments' => ['access content'],
     'file' => 'includes/form.inc',
     'type' => MENU_NORMAL_ITEM,
-  );
-  $items['upei/roblib/ill/finished'] = array(
+  ];
+  $items['upei/roblib/ill/finished'] = [
     'title' => 'UPEI ILL Request',
     'description' => 'Redirect to this page after form is submitted',
     'page callback' => 'upei_roblib_ill_form_redirect',
-    'access arguments' => array('access content'),
+    'access arguments' => ['access content'],
     'file' => 'includes/form.inc',
     'type' => MENU_NORMAL_ITEM,
-  );
+  ];
   return $items;
 }
 
@@ -41,6 +41,7 @@ function upei_roblib_ill_menu() {
  *
  * @param $form
  * @param $form_state
+ *
  * @return array
  */
 function upei_roblib_ill_doi_callback($form, &$form_state) {
@@ -53,10 +54,10 @@ function upei_roblib_ill_doi_callback($form, &$form_state) {
  * Implements hook_views_api().
  */
 function upei_roblib_ill_views_api() {
-  return array(
+  return [
     'api' => 3,
     'path' => drupal_get_path('module', 'upei_roblib_ill') . '/views',
-  );
+  ];
 }
 
 /**
@@ -64,402 +65,402 @@ function upei_roblib_ill_views_api() {
  */
 function upei_roblib_ill_views_data() {
   $data['upei_roblib_ill_request']['table']['group'] = t('UPEI Roblib ILL');
-  $data['upei_roblib_ill_request']['table']['base'] = array(
+  $data['upei_roblib_ill_request']['table']['base'] = [
     'field' => 'id',
     'title' => t('UPEI Roblib ILL Request'),
     'help' => t('Table for logging ILL Request'),
     'weight' => -10,
-  );
+  ];
 
-  $data['upei_roblib_ill_request']['patron_id'] = array(
+  $data['upei_roblib_ill_request']['patron_id'] = [
     'title' => t('Patron or Campus ID'),
     'help' => t('Patron or Campus ID.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
+    ],
+  ];
 
-  $data['upei_roblib_ill_request']['id'] = array(
+  $data['upei_roblib_ill_request']['id'] = [
     'title' => t('Unique ID for an ILL request'),
     'help' => t('Unique ID for an ILL request.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field_numeric',
       'click sortable' => TRUE,
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_numeric',
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-  );
+    ],
+  ];
 
-  $data['upei_roblib_ill_request']['patron_email'] = array(
+  $data['upei_roblib_ill_request']['patron_email'] = [
     'title' => t('Patron Email Address'),
     'help' => t('Patron Email Address.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['patron_lastname'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['patron_lastname'] = [
     'title' => t('Patron Lastname'),
     'help' => t('Patron Lastname.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
+    ],
+  ];
 
-  $data['upei_roblib_ill_request']['patron_firstname'] = array(
+  $data['upei_roblib_ill_request']['patron_firstname'] = [
     'title' => t('Patron Firstame'),
     'help' => t('Patron Firstname.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['patron_department'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['patron_department'] = [
     'title' => t('Patron Department'),
     'help' => t('Patron Department.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['patron_type'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['patron_type'] = [
     'title' => t('Patron Type'),
     'help' => t('Patron Type.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['author'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['author'] = [
     'title' => t('Authors name'),
     'help' => t('Authors Fullname.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['title'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['title'] = [
     'title' => t('Book or Journal Title'),
     'help' => t('Book or Patron Title.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['atitle'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['atitle'] = [
     'title' => t('Article or Chapter Title'),
     'help' => t('Article or Chapter Title.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['issn'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['issn'] = [
     'title' => t('ISSN'),
     'help' => t('ISSN.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['isbn'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['isbn'] = [
     'title' => t('ISBN'),
     'help' => t('ISBN.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['article_author'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['article_author'] = [
     'title' => t('Article or Chapter author'),
     'help' => t('Article or Chapter author.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['citation_date'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['citation_date'] = [
     'title' => t('The date of the article'),
     'help' => t('Article Date.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['pages_requested'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['pages_requested'] = [
     'title' => t('The pages requested'),
     'help' => t('The pages requested.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['volume'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['volume'] = [
     'title' => t('Volume'),
     'help' => t('Volume.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['issue'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['issue'] = [
     'title' => t('Issue'),
     'help' => t('Issue.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['genre'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['genre'] = [
     'title' => t('Article or Chapter author'),
     'help' => t('Article or Chapter author.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['doi'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['doi'] = [
     'title' => t('DOI'),
     'help' => t('DOI.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['relais_request_id'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['relais_request_id'] = [
     'title' => t('The Relais request id'),
     'help' => t('The Relais request id.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['relais_message'] = array(
-    'title' => t('The reason a request failed. '),
+    ],
+  ];
+  $data['upei_roblib_ill_request']['relais_message'] = [
+    'title' => t('The reason a request failed.'),
     'help' => t('The reason a request failed.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
-  $data['upei_roblib_ill_request']['notes'] = array(
+    ],
+  ];
+  $data['upei_roblib_ill_request']['notes'] = [
     'title' => t('The notes related to this request'),
     'help' => t('The notes related to this request.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_string',
-    ),
-    'argument' => array(
+    ],
+    'argument' => [
       'handler' => 'views_handler_argument_string',
-    ),
-  );
+    ],
+  ];
 
-  $data['upei_roblib_ill_request']['time_submitted'] = array(
+  $data['upei_roblib_ill_request']['time_submitted'] = [
     'title' => t('The Date and Time a request was submitted'),
     'help' => t('The Date and Time a request was submitted.'),
-    'field' => array(
+    'field' => [
       'handler' => 'views_handler_field_date',
       'click sortable' => TRUE,
-    ),
-    'sort' => array(
+    ],
+    'sort' => [
       'handler' => 'views_handler_sort_date',
-    ),
-    'filter' => array(
+    ],
+    'filter' => [
       'handler' => 'views_handler_filter_date',
-    ),
-  );
+    ],
+  ];
 
   return $data;
 }

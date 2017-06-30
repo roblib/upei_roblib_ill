@@ -7,6 +7,7 @@
 
 /**
  * Log an ILL request
+ *
  * @param array $request
  *   The request sent to Relais as an array (before it is encoded as JSON)
  * @param array $response
@@ -17,7 +18,7 @@ function upei_roblib_ill_log_request($request, $response) {
   $relais_message = isset($response['ConfirmMessage']) ? $response['ConfirmMessage'] : $response['Problem']['Message'];
   try {
     db_insert('upei_roblib_ill_request')
-      ->fields(array(
+      ->fields([
         'patron_id' => $request['DeliveryAddress']['campus_id'],
         'patron_firstname' => $request['DeliveryAddress']['FirstName'],
         'patron_lastname' => $request['DeliveryAddress']['Surname'],
@@ -40,8 +41,8 @@ function upei_roblib_ill_log_request($request, $response) {
         'time_submitted' => strtotime($time_submitted),
         'relais_request_id' => isset($response['RequestNumber']) ? $response['RequestNumber'] : '-1',
         'relais_message' => $relais_message,
-      ))->execute();
-  } catch(Exception $e) {
-    watchdog_exception('upei_roblib_ill',  $e, 'Error logging ILL request.', array(), WATCHDOG_ERROR);
+      ])->execute();
+  } catch (Exception $e) {
+    watchdog_exception('upei_roblib_ill', $e, 'Error logging ILL request.', [], WATCHDOG_ERROR);
   }
 }

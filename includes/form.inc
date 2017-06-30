@@ -88,62 +88,65 @@ function upei_roblib_ill_form_submit($form, &$form_state) {
       $response = upei_roblib_ill_add_request($form_state, $form_state['storage']['aid']);
       $error = isset($response['RequestNumber']) ? 'FALSE' : 'TRUE';
 
-      $form_state['redirect'] = array(
+      $form_state['redirect'] = [
         '/upei/roblib/ill/finished',
-        array(
-          'query' => array(
+        [
+          'query' => [
             'message' => $response['ConfirmMessage'],
             'email' => $form_state['values']['DeliveryAddress'],
             'error' => $error,
-          ),
-        ),
-      );
+          ],
+        ],
+      ];
   }
 
 }
 
 /**
- * After submitting an ILL request patrons will be redirected to the content returned from this function.
+ * After submitting an ILL request patrons will be redirected to the content
+ * returned from this function.
+ *
  * @return string
- *   a string of HTML to display including the results of the ILL request and some boilerplate text.
+ *   a string of HTML to display including the results of the ILL request and
+ *   some boilerplate text.
  */
 function upei_roblib_ill_form_redirect() {
   $contact_email = variable_get('upei_roblib_ill_contact_email', 'ill@upei.ca');
   $contact_phone_number = variable_get('upei_roblib_ill_contact_phone', '902-566-0445');
-  $librarian_link = l(t('subject-specific'), 'http://library.upei.ca/librarians', array('html' => TRUE));
+  $librarian_link = l(t('subject-specific'), 'http://library.upei.ca/librarians', ['html' => TRUE]);
   $help_message = t("We can help! Please contact your !librarian_link librarian if you'd like help finding more resources relating to your topic.",
-    array('!librarian_link' => $librarian_link));
-  $standard_message = t("To contact the department about this request, you can send a message to @email or 
-call @phone.", array('@phone' => $contact_phone_number, '@email' => $contact_email));
+    ['!librarian_link' => $librarian_link]);
+  $standard_message = t("To contact the department about this request, you can send a message to @email or
+call @phone.", ['@phone' => $contact_phone_number, '@email' => $contact_email]);
   if (isset($_GET['error']) && $_GET['error'] === 'FALSE') {
-    $standard_message =  t("A message including the Request ID has been sent to @email.  ", array(
-      '@email' => $_GET['email'],
-    )) . $standard_message;
+    $standard_message = t("A message including the Request ID has been sent to @email.", [
+        '@email' => $_GET['email'],
+      ]) . $standard_message;
   }
 
-  $output = array(
+  $output = [
     '#prefix' => '<div upei-roblib-ill-content>',
     '#suffix' => '</div>',
-    'dynamic_message' => array(
+    'dynamic_message' => [
       '#type' => 'markup',
       '#markup' => $_GET['message'],
       '#prefix' => '<div class="upei-roblib-ill-message">',
       '#suffix' => '</div>',
-    ),
-    'standard_message' => array(
+    ],
+    'standard_message' => [
       '#type' => 'markup',
       '#markup' => $standard_message,
       '#prefix' => '<div class="upei-roblib-ill-email">',
       '#suffix' => '</div>',
-    ),
-    'help_message' => array(
+    ],
+    'help_message' => [
       '#type' => 'markup',
       '#markup' => $help_message,
       '#allowed_tags' => ['a', 'source'],
       '#prefix' => '<div class="upei-roblib-ill-help">',
       '#suffix' => '</div>',
-    ),
-  );
+    ],
+  ];
   return drupal_render($output);
 }
 
@@ -165,25 +168,25 @@ function upei_roblib_ill_auth_form($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
   $form['#prefix'] = upei_roblib_format_biblio_info($form_state);
 
-  $form['FirstName'] = array(
+  $form['FirstName'] = [
     '#type' => 'textfield',
     '#title' => t('Your First Name'),
     '#size' => 50,
     '#required' => TRUE,
-  );
-  $form['Surname'] = array(
+  ];
+  $form['Surname'] = [
     '#type' => 'textfield',
     '#title' => t('Your Last Name'),
     '#size' => 50,
     '#required' => TRUE,
-  );
-  $form['campus_id'] = array(
+  ];
+  $form['campus_id'] = [
     '#type' => 'textfield',
     '#title' => t('Your Campus ID'),
     '#size' => 50,
     '#required' => TRUE,
-  );
-  $patron_types = array(
+  ];
+  $patron_types = [
     'None' => t('None'),
     'UPEI Faculty/Staff' => t('UPEI Faculty/Staff'),
     'UPEI Graduate Student' => t('UPEI Graduate Student'),
@@ -192,8 +195,8 @@ function upei_roblib_ill_auth_form($form, &$form_state) {
     'UPEI Alumni Premiere member' => t('UPEI Alumni Premiere member'),
     'UPEI Alumni member' => t('UPEI Alumni member'),
     'Public Borrower' => t('Public Borrower'),
-  );
-  $departments = array(
+  ];
+  $departments = [
     'Applied Human Sciences' => t('Applied Human Sciences'),
     'AVC - Biomedical Sciences' => t('AVC - Biomedical Sciences'),
     'AVC - Companion Animals' => t('AVC - Companion Animals'),
@@ -227,56 +230,56 @@ function upei_roblib_ill_auth_form($form, &$form_state) {
     'Religious Studies' => t('Religious Studies'),
     'Sociology/Anthropology' => t('Sociology/Anthropology'),
     'Other' => t('Other (Please add to the Notes field)'),
-  );
-  $form['patron_type'] = array(
+  ];
+  $form['patron_type'] = [
     '#type' => 'select',
     '#title' => t('Your Patron Type'),
     '#options' => $patron_types,
     '#required' => TRUE,
-  );
-  $form['Department'] = array(
+  ];
+  $form['Department'] = [
     '#type' => 'select',
     '#title' => t('Your Department'),
     '#options' => $departments,
     '#required' => TRUE,
-  );
-  $form['DeliveryAddress'] = array(
+  ];
+  $form['DeliveryAddress'] = [
     '#type' => 'textfield',
     '#title' => t('Your Email'),
     '#size' => 50,
     '#required' => TRUE,
-  );
-  $form['InstitutionName'] = array(
+  ];
+  $form['InstitutionName'] = [
     '#type' => 'hidden',
     '#title' => t('Name of Institution'),
     '#size' => 50,
     '#default_value' => 'University of Prince Edward Island',
     '#required' => TRUE,
-  );
-  $form['LibraryName'] = array(
+  ];
+  $form['LibraryName'] = [
     '#type' => 'hidden',
     '#title' => t('Name of Library'),
     '#size' => 50,
     '#default_value' => 'Robertson Library',
     '#required' => TRUE,
-  );
-  $form['notes'] = array(
+  ];
+  $form['notes'] = [
     '#type' => 'textarea',
     '#title' => t('Notes'),
     '#size' => 50,
     '#required' => FALSE,
-  );
-  $form['certify'] = array(
+  ];
+  $form['certify'] = [
     '#title' => t('I certify'),
     '#type' => 'checkbox',
     '#description' => 'I hereby certify that this item is being sought for a fair dealing purpose and any copying will be in accordance with the Copyright Act. ',
     '#size' => 50,
     '#required' => TRUE,
-  );
-  $form['submit'] = array(
+  ];
+  $form['submit'] = [
     '#type' => 'submit',
     '#value' => 'Submit',
-  );
+  ];
 
   return $form;
 
@@ -299,47 +302,47 @@ function upei_roblib_ill_request_form($form, &$form_state) {
   $form['#prefix'] = '<div id="upei-roblib-ill-request-form">';
   $form['#suffix'] = '</div>';
   $genre = empty(upei_roblib_ill_get_request_variable('genre')) ? 'article' : upei_roblib_ill_get_request_variable('genre');
-  $form['Genre'] = array(
+  $form['Genre'] = [
     '#type' => 'select',
     '#title' => t('Genre'),
     '#default_value' => $genre,
-    '#options' => array(
+    '#options' => [
       'article' => t('Journal Article'),
       'book' => t('Book'),
       'chapter' => t('Book Chapter'),
-    ),
+    ],
     '#required' => TRUE,
-  );
-  $form['doi'] = array(
+  ];
+  $form['doi'] = [
     '#type' => 'textfield',
     '#title' => t('DOI'),
     '#default_value' => upei_roblib_ill_get_doi_from_request(),
     '#description' => 'DOI, if you provide a DOI we will attempt to lookup the record for you',
     '#size' => 50,
-    '#states' => array(
-      'visible' => array(
-        ':input[name="Genre"]' => array('value' => 'article'),
-      ),
-    ),
+    '#states' => [
+      'visible' => [
+        ':input[name="Genre"]' => ['value' => 'article'],
+      ],
+    ],
     '#required' => FALSE,
-  );
-  $form['doi_button'] = array(
+  ];
+  $form['doi_button'] = [
     '#type' => 'submit',
     '#value' => 'lookup DOI',
-    '#ajax' => array(
+    '#ajax' => [
       'callback' => 'upei_roblib_ill_doi_callback',
       'method' => 'replace',
       'wrapper' => 'upei-roblib-ill-request-form',
       'effect' => 'fade',
-    ),
-    '#states' => array(
-      'visible' => array(
-        ':input[name="Genre"]' => array('value' => 'article'),
-      ),
-    ),
+    ],
+    '#states' => [
+      'visible' => [
+        ':input[name="Genre"]' => ['value' => 'article'],
+      ],
+    ],
     '#required' => FALSE,
-  );
-  $form['Title'] = array(
+  ];
+  $form['Title'] = [
     '#type' => 'textarea',
     '#rows' => 2,
     '#title' => t('Source Title'),
@@ -347,136 +350,136 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     '#description' => 'Journal or Book Title (Required)',
     '#size' => 50,
     '#required' => FALSE,
-  );
-  $form['ArticleTitle'] = array(
+  ];
+  $form['ArticleTitle'] = [
     '#type' => 'textarea',
     '#rows' => 2,
     '#title' => t('Title'),
     '#default_value' => upei_roblib_ill_get_request_variable('atitle'),
     '#description' => 'Article or Chapter Title',
     '#size' => 50,
-    '#states' => array(
-      'invisible' => array(
-        ':input[name="Genre"]' => array('value' => 'book'),
-      ),
-    ),
+    '#states' => [
+      'invisible' => [
+        ':input[name="Genre"]' => ['value' => 'book'],
+      ],
+    ],
     '#required' => FALSE,
-  );
+  ];
 
-  $form['ISSN'] = array(
+  $form['ISSN'] = [
     '#type' => 'textfield',
     '#title' => t('ISSN'),
     '#default_value' => upei_roblib_ill_get_request_variable('issn'),
     '#size' => 50,
-    '#states' => array(
-      'visible' => array(
-        ':input[name="Genre"]' => array('value' => 'article'),
-      ),
-    ),
+    '#states' => [
+      'visible' => [
+        ':input[name="Genre"]' => ['value' => 'article'],
+      ],
+    ],
     '#required' => FALSE,
-  );
+  ];
   $article_author = ($genre == 'book') ? '' : upei_roblib_ill_get_request_variable('author');
-  $form['ArticleAuthor'] = array(
+  $form['ArticleAuthor'] = [
     '#type' => 'textfield',
     '#title' => t('Author'),
     '#default_value' => $article_author,
     '#size' => 50,
     '#required' => FALSE,
     '#description' => 'Article or Chapter Author',
-    '#states' => array(
-      'invisible' => array(
-        ':input[name="Genre"]' => array('value' => 'book'),
-      ),
-    ),
-  );
+    '#states' => [
+      'invisible' => [
+        ':input[name="Genre"]' => ['value' => 'book'],
+      ],
+    ],
+  ];
   $author = ($genre == 'book') ? upei_roblib_ill_get_request_variable('author') : '';
-  $form['Author'] = array(
+  $form['Author'] = [
     '#type' => 'textfield',
     '#title' => t('Book Author'),
     '#default_value' => $author,
     '#size' => 50,
     '#required' => FALSE,
-    '#states' => array(
-      'invisible' => array(
-        ':input[name="Genre"]' => array('value' => t('article')),
-      ),
-    ),
-  );
-  $form['ISBN'] = array(
+    '#states' => [
+      'invisible' => [
+        ':input[name="Genre"]' => ['value' => t('article')],
+      ],
+    ],
+  ];
+  $form['ISBN'] = [
     '#type' => 'textfield',
     '#title' => t('ISBN'),
     '#default_value' => upei_roblib_ill_get_request_variable('isbn'),
     '#size' => 50,
-    '#states' => array(
-      'invisible' => array(
-        ':input[name="Genre"]' => array('value' => 'article'),
-      ),
-    ),
+    '#states' => [
+      'invisible' => [
+        ':input[name="Genre"]' => ['value' => 'article'],
+      ],
+    ],
     '#required' => FALSE,
-  );
-  $form['SubTitle'] = array(
+  ];
+  $form['SubTitle'] = [
     '#type' => 'hidden',
     '#title' => t('Sub Title'),
     '#default_value' => upei_roblib_ill_get_request_variable('ubtitle'),
     '#size' => 50,
     '#required' => FALSE,
-  );
-  $form['SeriesTitle'] = array(
+  ];
+  $form['SeriesTitle'] = [
     '#type' => 'hidden',
     '#title' => t('Series Title'),
     '#default_value' => upei_roblib_ill_get_request_variable('stitle'),
     '#size' => 50,
     '#required' => FALSE,
-  );
+  ];
 
-  $form['Volume'] = array(
+  $form['Volume'] = [
     '#type' => 'textfield',
     '#title' => t('Volume'),
     '#default_value' => upei_roblib_ill_get_request_variable('volume'),
     '#size' => 50,
     '#required' => FALSE,
-    '#states' => array(
-      'visible' => array(
-        ':input[name="Genre"]' => array('value' => 'article'),
-      ),
-    ),
-  );
-  $form['Issue'] = array(
+    '#states' => [
+      'visible' => [
+        ':input[name="Genre"]' => ['value' => 'article'],
+      ],
+    ],
+  ];
+  $form['Issue'] = [
     '#type' => 'textfield',
     '#title' => t('Issue'),
     '#default_value' => upei_roblib_ill_get_request_variable('issue'),
     '#size' => 50,
     '#required' => FALSE,
-    '#states' => array(
-      'visible' => array(
-        ':input[name="Genre"]' => array('value' => 'article'),
-      ),
-    ),
-  );
-  $form['PagesRequested'] = array(
+    '#states' => [
+      'visible' => [
+        ':input[name="Genre"]' => ['value' => 'article'],
+      ],
+    ],
+  ];
+  $form['PagesRequested'] = [
     '#type' => 'textfield',
     '#title' => t('Pages'),
     '#default_value' => upei_roblib_ill_get_request_variable('pages'),
     '#description' => 'Pages requested (startpage-endpage)',
     '#size' => 50,
     '#required' => FALSE,
-    '#states' => array(
-      'invisible' => array(
-        ':input[name="Genre"]' => array('value' => 'book'),
-      ),
-    ),
-  );
-  $form['Date'] = array(
+    '#states' => [
+      'invisible' => [
+        ':input[name="Genre"]' => ['value' => 'book'],
+      ],
+    ],
+  ];
+  $form['Date'] = [
     '#type' => 'textfield',
     '#title' => t('Date'),
     '#default_value' => upei_roblib_ill_get_request_variable('date'),
     '#size' => 50,
     '#required' => FALSE,
-  );
-  $form['next'] = array(
+  ];
+  $form['next'] = [
     '#type' => 'submit',
-    '#value' => t('Next')
-  );
+    '#value' => t('Next'),
+  ];
   return $form;
 
 }

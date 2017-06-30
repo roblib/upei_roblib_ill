@@ -7,11 +7,14 @@
  */
 
 /**
- * Gets the XML as crossref associated with the supplied DOI.  Updates the drupal form with the data.
+ * Gets the XML as crossref associated with the supplied DOI.  Updates the
+ * drupal form with the data.
+ *
  * @param array $form
  *   The Drupal form
  * @param string $doi
  *   The DOI
+ *
  * @return array
  *   A Drupal form with updated values.
  */
@@ -39,36 +42,43 @@ function upei_roblib_ill_doi_get_data($form, $doi) {
     }
   }
   else {
-    drupal_set_message(t('Error retrieve data using DOI of @doi', array('@doi' => $doi)), 'error');
+    drupal_set_message(t('Error retrieve data using DOI of @doi', ['@doi' => $doi]), 'error');
     return $form;
   }
 }
 
 /**
- * A convenience function for retrieving individual nodes from the Crossref XML without throwing notices.
+ * A convenience function for retrieving individual nodes from the Crossref XML
+ * without throwing notices.
  *
  * @param DomDocument $crossref_xml
  *   The Crossref XML
  * @param string $node_name
- *   The node we want a value for, we are assuming the xml only has one node with the given name.
+ *   The node we want a value for, we are assuming the xml only has one node
+ *   with the given name.
  * @param int $index
- *   If there are more than one element we can ask for the value of each element
+ *   If there are more than one element we can ask for the value of each
+ *   element
+ *
  * @return string
  *   Returns the value of the element
  */
 function upei_roblib_ill_get_xml_node($crossref_xml, $node_name, $index = 0) {
   // TODO rewrite this function to use full xpath
-  return empty($crossref_xml->getElementsbyTagName($node_name)->item($index)) ? '' :
+  return empty($crossref_xml->getElementsbyTagName($node_name)
+    ->item($index)) ? '' :
     $crossref_xml->getElementsbyTagName($node_name)->item($index)->nodeValue;
 }
 
 
 /**
  * Parse the response from Crossref and populate the request form
+ *
  * @param DomDocument $crossref_xml
  *   The crossref xml
  * @param array $form
  *   Drupal form
+ *
  * @return mixed
  *   An updated Drupal form
  */
@@ -80,11 +90,11 @@ function upei_roblib_ill_populate_form_doi($crossref_xml, $form) {
   $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title');
   if (empty($full_title)) {
     $form['Genre']['#value'] = 'book';
-    $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title',1);
-    if(isset($form['ArticleTitle']['#value'])) {
+    $form['ArticleTitle']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'title', 1);
+    if (isset($form['ArticleTitle']['#value'])) {
       $form['Genre']['#value'] = 'chapter';
     }
-    $full_title = upei_roblib_ill_get_xml_node($crossref_xml, 'title' , 0);
+    $full_title = upei_roblib_ill_get_xml_node($crossref_xml, 'title', 0);
   }
   $form['Title']['#value'] = $full_title;
   $form['ISSN']['#value'] = upei_roblib_ill_get_xml_node($crossref_xml, 'issn');
@@ -151,14 +161,14 @@ function upei_roblib_ill_doi_load($doi, $parse = TRUE) {
   $id = $parse ? upei_roblib_ill_doi_name_from_url($doi) : $doi;
   $openurl = variable_get('upei_roblib_ill_doi_openurl', 'http://www.crossref.org/openurl');
   $openurl_pid = variable_get('upei_roblib_ill_doi_openurl_pid', 'user@example.com');
-  $url = url($openurl, array(
-    'query' => array(
+  $url = url($openurl, [
+    'query' => [
       'noredirect' => 'true',
       'pid' => $openurl_pid,
       'format' => 'unixref',
       'id' => ((strpos($id, 'doi:') === 0) ? $id : 'doi:' . $id),
-    ),
-  ));
+    ],
+  ]);
   return drupal_http_request($url);
 }
 

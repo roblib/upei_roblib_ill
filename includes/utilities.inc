@@ -11,9 +11,10 @@
  * @param $key
  */
 function upei_roblib_ill_check_arr_item(&$value, $key) {
-  if(is_array($value)) {
+  if (is_array($value)) {
     array_walk($value, 'upei_roblib_ill_check_arr_item');
-  } else {
+  }
+  else {
     $value = filter_xss($value);
   }
 }
@@ -23,6 +24,7 @@ function upei_roblib_ill_check_arr_item(&$value, $key) {
  *
  * @param $values
  *   A drupal form_state['values] array
+ *
  * @return array
  *   An array where the keys in the array that have empty values are removed and
  * drupal specific elements are removed.
@@ -30,10 +32,10 @@ function upei_roblib_ill_check_arr_item(&$value, $key) {
 function upei_roblib_ill_clean_array($values) {
   $arr = array_filter($values);
   if (isset($arr['ISSN'])) {
-    $arr['ISSN'] = array($arr['ISSN']);
+    $arr['ISSN'] = [$arr['ISSN']];
   }
   if (isset($arr['ISBN'])) {
-    $arr['ISBN'] = array($arr['ISBN']);
+    $arr['ISBN'] = [$arr['ISBN']];
   }
   // The below checks are due to ebscos habit of sending sending the same info in both atitle and title etc.
   if (isset($arr['Genre']) && $arr['Genre'] == 'article' && isset($arr['Author'])) {
@@ -66,10 +68,12 @@ function upei_roblib_ill_clean_array($values) {
 }
 
 /**
- * Allows us to ask for _REQUEST variables that may or may not exist without generating a php warning.
- * Also does some formatting for certain variables.
+ * Allows us to ask for _REQUEST variables that may or may not exist without
+ * generating a php warning. Also does some formatting for certain variables.
+ *
  * @param string $variable
  *   The name of the $_REQUEST variable to check
+ *
  * @return string
  *   The value of the $_REQUEST variable or an empty string.
  */
@@ -85,7 +89,7 @@ function upei_roblib_ill_get_request_variable($variable) {
     return preg_match('/^\d{4}-?\d{3}[\dxX]$/', $_REQUEST[$variable]) ? $_REQUEST[$variable] : '';
   }
   // ebsco sometimes returns bookitem we only understand chapter
-  if(($variable == 'genre' && !empty($_REQUEST[$variable])) && $_REQUEST[$variable] == 'bookitem') {
+  if (($variable == 'genre' && !empty($_REQUEST[$variable])) && $_REQUEST[$variable] == 'bookitem') {
     return 'chapter';
   }
   return isset($_REQUEST[$variable]) ? $_REQUEST[$variable] : '';
@@ -96,7 +100,7 @@ function upei_roblib_ill_get_doi_from_request() {
 }
 
 function upei_roblib_ill_get_doi_from_id() {
-  if(!empty($_REQUEST['ID'])) {
+  if (!empty($_REQUEST['ID'])) {
     return (strpos($_REQUEST['ID'], 'doi:') !== 0) ? '' : $_REQUEST['ID'];
   }
   return '';
@@ -104,13 +108,15 @@ function upei_roblib_ill_get_doi_from_id() {
 
 /**
  * Populates the requestInfo portion of a Relais request
+ *
  * @param array $values
  *   an array containing a 'Genre' element.
+ *
  * @return array
  *   The requestInfo portion of a Relais request
  */
 function upei_roblib_ill_request_info_array($values, $notes) {
-  $requestInfo = array();
+  $requestInfo = [];
   $genre = $values['Genre'];
   $requestInfo['DateSubmitted'] = date('Y-m-d H:i:s');
   $requestInfo['Notes'] = $notes;
@@ -128,25 +134,28 @@ function upei_roblib_ill_request_info_array($values, $notes) {
 }
 
 /**
- * Creates a summary Table based on the biblio information in the form_state array for display
+ * Creates a summary Table based on the biblio information in the form_state
+ * array for display
+ *
  * @param $form_state
+ *
  * @return string
  */
 function upei_roblib_format_biblio_info($form_state) {
   $data = upei_roblib_ill_clean_array($form_state['storage']['upei_roblib_ill_request_form']);
-  $rows = array();
+  $rows = [];
   foreach ($data as $key => $value) {
     if ($key == 'ISSN' || $key == 'ISBN') {
       $value = reset($value);
     }
-    array_push($rows, array($key, $value));
+    array_push($rows, [$key, $value]);
   }
-  $output = array(
+  $output = [
     '#theme' => 'table',
     '#rows' => $rows,
     '#prefix' => '<div class=upei-roblib-ill-biblio-info>',
     '#suffix' => '</div>',
-  );
+  ];
   $html_output = drupal_render($output);
   return $html_output;
 }

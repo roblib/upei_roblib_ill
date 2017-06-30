@@ -9,14 +9,14 @@
  * Implements hook_uninstall().
  */
 function upei_roblib_ill_uninstall() {
-  $variables = array(
+  $variables = [
     'upei_roblib_ill_add_url',
     'upei_roblib_ill_auth_url',
     'upei_roblib_ill_relais_key',
     'upei_roblib_ill_library_symbol',
     'upei_roblib_ill_contact_email',
     'upei_roblib_ill_contact_phonel',
-  );
+  ];
   array_walk($variables, 'variable_del');
 }
 
@@ -24,149 +24,149 @@ function upei_roblib_ill_uninstall() {
  * Implements hook_schema().
  */
 function upei_roblib_ill_schema() {
-  $schema['upei_roblib_ill_request'] = array(
+  $schema['upei_roblib_ill_request'] = [
     'description' => 'Log table for ILL requests',
-    'fields' => array(
-      'id' => array(
+    'fields' => [
+      'id' => [
         'description' => 'primary key',
         'type' => 'serial',
         'size' => 'big',
         'not null' => TRUE,
-      ),
-      'patron_id' => array(
+      ],
+      'patron_id' => [
         'description' => 'The id of the user that submitted the request',
         'type' => 'varchar',
         'length' => '255',
         'not null' => TRUE,
-      ),
-      'patron_email' => array(
+      ],
+      'patron_email' => [
         'description' => 'The email address of the user that submitted the request',
         'type' => 'varchar',
         'length' => '255',
         'not null' => FALSE,
-      ),
-      'patron_lastname' => array(
+      ],
+      'patron_lastname' => [
         'description' => 'Lastname of the user that submitted the request',
         'type' => 'varchar',
         'length' => '60',
         'not null' => TRUE,
-      ),
-      'patron_firstname' => array(
+      ],
+      'patron_firstname' => [
         'description' => 'Firstname of the user that submitted the request',
         'type' => 'varchar',
         'length' => '60',
         'not null' => TRUE,
-      ),
-      'patron_department' => array(
+      ],
+      'patron_department' => [
         'description' => 'The department the user that submitted the request belongs',
         'type' => 'varchar',
         'length' => '128',
         'not null' => TRUE,
-      ),
-      'patron_type' => array(
+      ],
+      'patron_type' => [
         'description' => 'The type of patron ',
         'type' => 'varchar',
         'length' => '128',
         'not null' => FALSE,
-      ),
-      'author' => array(
+      ],
+      'author' => [
         'description' => 'authors name',
         'type' => 'varchar',
         'length' => '128',
         'not null' => FALSE,
-      ),
-      'title' => array(
+      ],
+      'title' => [
         'description' => 'book or journal title',
         'type' => 'varchar',
         'length' => '512',
         'not null' => FALSE,
-      ),
-      'atitle' => array(
+      ],
+      'atitle' => [
         'description' => 'article or chapter title',
         'type' => 'varchar',
         'length' => '512',
         'not null' => FALSE,
-      ),
-      'issn' => array(
+      ],
+      'issn' => [
         'description' => 'Article issn',
         'type' => 'varchar',
         'length' => '18',
         'not null' => FALSE,
-      ),
-      'isbn' => array(
+      ],
+      'isbn' => [
         'description' => 'book isbn',
         'type' => 'varchar',
         'length' => '8',
         'not null' => FALSE,
-      ),
-      'article_author' => array(
+      ],
+      'article_author' => [
         'description' => 'Article author',
         'type' => 'varchar',
         'length' => '128',
         'not null' => FALSE,
-      ),
-      'citation_date' => array(
+      ],
+      'citation_date' => [
         'description' => 'Date and time of the request',
         'type' => 'varchar',
         'length' => '30',
         'not null' => TRUE,
-      ),
-      'pages_requested' => array(
+      ],
+      'pages_requested' => [
         'description' => 'pages requested',
         'type' => 'varchar',
         'length' => '30',
         'not null' => FALSE,
-      ),
-      'volume' => array(
+      ],
+      'volume' => [
         'description' => 'Volume',
         'type' => 'varchar',
         'length' => '30',
         'not null' => FALSE,
-      ),
-      'issue' => array(
+      ],
+      'issue' => [
         'description' => 'Issue',
         'type' => 'varchar',
         'length' => '50',
         'not null' => FALSE,
-      ),
-      'genre' => array(
+      ],
+      'genre' => [
         'description' => 'type of material requested (article, book, book chapter)',
         'type' => 'varchar',
         'length' => '30',
         'not null' => TRUE,
-      ),
-      'doi' => array(
+      ],
+      'doi' => [
         'description' => 'The DOI',
         'type' => 'varchar',
         'length' => '255',
         'not null' => FALSE,
-      ),
-      'relais_request_id' => array(
+      ],
+      'relais_request_id' => [
         'description' => 'The request id stored in the Relais datbabase',
         'type' => 'varchar',
         'length' => '30',
         'not null' => FALSE,
-      ),
-      'relais_message' => array(
+      ],
+      'relais_message' => [
         'description' => 'If the ILL request failed we will store a reason.',
         'type' => 'varchar',
         'length' => '255',
         'not null' => FALSE,
-      ),
-      'time_submitted' => array(
+      ],
+      'time_submitted' => [
         'description' => 'The time the request was submitted',
         'type' => 'int',
         'not null' => FALSE,
-      ),
-      'notes' => array(
+      ],
+      'notes' => [
         'description' => 'Notes',
         'type' => 'varchar',
         'length' => '512',
         'not null' => FALSE,
-      ),
-    ),
-    'primary key' => array('id'),
-  );
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
   return $schema;
 
 }
