@@ -20,6 +20,17 @@ function upei_roblib_ill_uninstall() {
   array_walk($variables, 'variable_del');
 }
 
+function upei_roblib_ill_update_7100() {
+  db_change_field('upei_roblib_ill_request', 'isbn', 'isbn',
+    array(
+      'description' => 'book isbn',
+      'type' => 'varchar',
+      'length' => '200',
+      'not null' => FALSE,
+    )
+  );
+}
+
 /**
  * Implements hook_schema().
  */
@@ -96,7 +107,7 @@ function upei_roblib_ill_schema() {
       'isbn' => [
         'description' => 'book isbn',
         'type' => 'varchar',
-        'length' => '8',
+        'length' => '200',
         'not null' => FALSE,
       ],
       'article_author' => [
