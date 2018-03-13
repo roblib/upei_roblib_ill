@@ -362,8 +362,8 @@ function upei_roblib_ill_views_data() {
     ],
   ];
   $data['upei_roblib_ill_request']['genre'] = [
-    'title' => t('Article or Chapter author'),
-    'help' => t('Article or Chapter author.'),
+    'title' => t('Genre'),
+    'help' => t('The type of item requested.'),
     'field' => [
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
