@@ -40,9 +40,9 @@ function upei_roblib_ill_log_request($request, $response) {
         'pages_requested' => isset($request['BibliographicInfo']['PagesRequested']) ? $request['BibliographicInfo']['PagesRequested'] : '',
         'time_submitted' => strtotime($time_submitted),
         'relais_request_id' => isset($response['RequestNumber']) ? $response['RequestNumber'] : '-1',
-        'relais_message' => $relais_message,
+        'relais_message' => substr($relais_message, 0, 254),
       ])->execute();
   } catch (Exception $e) {
-    watchdog_exception('upei_roblib_ill', $e, 'Error logging ILL request.', [], WATCHDOG_ERROR);
+    watchdog_exception('upei_roblib_ill', $e, 'Error logging ILL request.', NULL, WATCHDOG_ERROR);
   }
 }
