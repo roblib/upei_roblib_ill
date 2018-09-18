@@ -471,7 +471,7 @@ function upei_roblib_ill_request_form($form, &$form_state) {
   ];
   $form['Date'] = [
     '#type' => 'textfield',
-    '#title' => t('Date'),
+    '#title' => t('Publication Date'),
     '#default_value' => upei_roblib_ill_get_request_variable('date'),
     '#size' => 50,
     '#required' => FALSE,
