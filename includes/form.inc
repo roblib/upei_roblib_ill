@@ -211,7 +211,6 @@ Freedom of Information and Protection of Privacy Act and will be protected
     'Undergraduate Student' => t('Undergraduate Student'),
     'Masters Student' => t('Masters Student'),
     'Doctoral Student' => t('Doctoral Student'),
-    'Honours Undergraduate Student' => t('Honours Undergraduate Student'),
     'Alumni Premiere Subscriber' => t('Alumni Premiere Subscriber'),
     'Alumni/Public' => t('Alumni/Public'),
     'Other' => 'Other',
@@ -265,7 +264,7 @@ Freedom of Information and Protection of Privacy Act and will be protected
   ];
   $form['DeliveryAddress'] = [
     '#type' => 'textfield',
-    '#title' => t('Your Email'),
+    '#title' => t('Your Email (If using an email address other than @upei.ca, enter that address in the Notes field as well.)'),
     '#size' => 50,
     '#required' => TRUE,
   ];
@@ -334,7 +333,7 @@ function upei_roblib_ill_request_form($form, &$form_state) {
   ];
   $form['doi'] = [
     '#type' => 'textfield',
-    '#title' => t("DOI (ex: 10.1016/j.ypmed.2019.01.018)"),
+    '#title' => t("DOI (ex: 10.1016/j.ypmed.2019.01.018) <a href='https://library.upei.ca/doi'>more info</a>"),
     '#default_value' => upei_roblib_ill_get_doi_from_request(),
     //'#description' => 'DOI, if you provide a DOI we will attempt to lookup the record for you',
     '#size' => 50,
