@@ -80,20 +80,21 @@ function upei_roblib_ill_clean_array($values) {
 function upei_roblib_ill_get_request_variable($variable) {
   if ($variable == 'author' && empty($_REQUEST[$variable])) {
     //google scholar usually sends auinit aulast instead of author
-    $initial = isset($_REQUEST['auinit']) ? $_REQUEST['auinit'] : NULL;
-    $last_name = isset($_REQUEST['aulast']) ? $_REQUEST['aulast'] : NULL;
+    $initial = isset($_REQUEST['auinit']) ? check_plain($_REQUEST['auinit']) : NULL;
+    $last_name = isset($_REQUEST['aulast']) ? check_plain($_REQUEST['aulast']) : NULL;
     return !empty($last_name) ? $last_name . ',' . $initial : '';
   }
   if ($variable == 'issn' && !empty($_REQUEST[$variable])) {
     // ebsco sometimes sends garbage as issns verify this is a valid issn before displaying the value in the form.
-    return preg_match('/^\d{4}-?\d{3}[\dxX]$/', $_REQUEST[$variable]) ? $_REQUEST[$variable] : '';
+    return preg_match('/^\d{4}-?\d{3}[\dxX]$/', $_REQUEST[$variable]) ? check_plain($_REQUEST[$variable]) : '';
   }
   // ebsco sometimes returns bookitem we only understand chapter
   if (($variable == 'genre' && !empty($_REQUEST[$variable])) && $_REQUEST[$variable] == 'bookitem') {
     return 'chapter';
   }
-  return isset($_REQUEST[$variable]) ? $_REQUEST[$variable] : '';
+  return isset($_REQUEST[$variable]) ? check_plain($_REQUEST[$variable]) : '';
 }
+
 
 function upei_roblib_ill_get_doi_from_request() {
   return (!empty($_REQUEST['doi'])) ? $_REQUEST['doi'] : upei_roblib_ill_get_doi_from_id();

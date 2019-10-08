@@ -320,7 +320,8 @@ function upei_roblib_ill_request_form($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
   $form['#prefix'] = '<div id="upei-roblib-ill-request-form">';
   $form['#suffix'] = '<div class="roblib-required">* = Required Field</div></div>';
-  $genre = empty(upei_roblib_ill_get_request_variable('genre')) ? 'article' : upei_roblib_ill_get_request_variable('genre');
+  $type = upei_roblib_ill_get_request_variable('genre');
+  $genre = empty($type) ? 'article' : $type;
   $form['Genre'] = [
     '#type' => 'select',
     '#title' => t('Item Type'),
@@ -331,6 +332,9 @@ function upei_roblib_ill_request_form($form, &$form_state) {
     ],
     '#required' => TRUE,
   ];
+  if(!empty($type)) {
+    $form['Genre']['#default_value'] = $type;
+  }
   $form['doi'] = [
     '#type' => 'textfield',
     '#title' => t("DOI (ex: 10.1016/j.ypmed.2019.01.018) <a href='https://library.upei.ca/doi'>more info</a>"),
