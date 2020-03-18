@@ -38,6 +38,8 @@ function upei_roblib_ill_form($form, &$form_state) {
  */
 function upei_roblib_ill_form_validate($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/relais');
+  form_set_error('Title', t('Inter Library Load is currently unavailable.'));
+  return;
   if ($form_state['step'] == 'upei_roblib_ill_auth_form') {
     if (!valid_email_address($form_state['values']['DeliveryAddress'])) {
       form_set_error('DeliveryAddress', t('Your email address appears to be invalid.'));
@@ -181,10 +183,10 @@ function upei_roblib_ill_auth_form($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
   $form['#prefix'] = upei_roblib_format_biblio_info($form_state);
   $form['#suffix'] = '<div class="roblib-required">* = Required Field</div>
-<div class="roblib-FOIPP"><strong>Protection of Privacy</strong> - The personal information requested 
-on this form is collected under the authority of Section 31(c) of the PEI 
+<div class="roblib-FOIPP"><strong>Protection of Privacy</strong> - The personal information requested
+on this form is collected under the authority of Section 31(c) of the PEI
 Freedom of Information and Protection of Privacy Act and will be protected
- under Part 2 of that Act. It will be used for the purpose of administering 
+ under Part 2 of that Act. It will be used for the purpose of administering
  and providing library service. Direct any questions about this collection to
   Health Sciences and Scholarly Communications Librarian at ill@upei.ca, 550
    University Ave, Charlottetown PE , 902-566-0453.</div>';
@@ -331,7 +333,12 @@ Freedom of Information and Protection of Privacy Act and will be protected
  */
 function upei_roblib_ill_request_form($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
-  $form['#prefix'] = '<div id="upei-roblib-ill-request-form">';
+  $emergency_message = '<div class="messages messages--error cl:qosure-notice">Due to ongoing Public Health concerns, we are unable to
+  accept any Interlibrary Loan (LL) requests at this time. Requests previously
+  submitted are also unlikely to be filled until staff here and at our partner
+  libraries are able to return to their workplaces.  We apologize for any
+  inconvenience. </div>';
+  $form['#prefix'] = $emergency_message . '<div id="upei-roblib-ill-request-form">';
   $form['#suffix'] = '<div class="roblib-required">* = Required Field</div></div>';
   $type = upei_roblib_ill_get_request_variable('genre');
   $genre = empty($type) ? 'article' : $type;
