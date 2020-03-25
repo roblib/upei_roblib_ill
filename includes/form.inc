@@ -38,8 +38,6 @@ function upei_roblib_ill_form($form, &$form_state) {
  */
 function upei_roblib_ill_form_validate($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/relais');
-  form_set_error('Title', t('Inter Library Load is currently unavailable.'));
-  return;
   if ($form_state['step'] == 'upei_roblib_ill_auth_form') {
     if (!valid_email_address($form_state['values']['DeliveryAddress'])) {
       form_set_error('DeliveryAddress', t('Your email address appears to be invalid.'));
@@ -333,11 +331,10 @@ Freedom of Information and Protection of Privacy Act and will be protected
  */
 function upei_roblib_ill_request_form($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
-  $emergency_message = '<div class="messages messages--error cl:qosure-notice">Due to ongoing Public Health concerns, we are unable to
-  accept any Interlibrary Loan (LL) requests at this time. Requests previously
-  submitted are also unlikely to be filled until staff here and at our partner
-  libraries are able to return to their workplaces.  We apologize for any
-  inconvenience. </div>';
+  $emergency_message = '<div class="messages messages--error closure-notice">Libraries are unable
+ to provide access to physical resources at this time, so, print books, chapters
+ from print books, articles from print journal holdings, microfilm/microfiche will not be available.
+ You can still request chapters from ebooks, or journal articles. </div>';
   $form['#prefix'] = $emergency_message . '<div id="upei-roblib-ill-request-form">';
   $form['#suffix'] = '<div class="roblib-required">* = Required Field</div></div>';
   $type = upei_roblib_ill_get_request_variable('genre');
