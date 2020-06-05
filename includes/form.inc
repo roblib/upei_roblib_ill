@@ -331,10 +331,11 @@ Freedom of Information and Protection of Privacy Act and will be protected
  */
 function upei_roblib_ill_request_form($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
-  $emergency_message = '<div class="messages messages--error closure-notice">Libraries are unable
- to provide access to physical resources at this time, so, print books, chapters
- from print books, articles from print journal holdings, microfilm/microfiche will not be available.
- You can still request chapters from ebooks, or journal articles. </div>';
+  $emergency_message = '<div class="messages messages--error closure-notice">Most libraries
+ are unable to provide access to physical resources at this time, so books, microfilm,
+  etc. are not available and requests for those will be automatically rejected.
+   You may request chapters from books, or journal articles. If they are not
+   currently accessible, you will be notified. </div>';
   $form['#prefix'] = $emergency_message . '<div id="upei-roblib-ill-request-form">';
   $form['#suffix'] = '<div class="roblib-required">* = Required Field</div></div>';
   $type = upei_roblib_ill_get_request_variable('genre');
