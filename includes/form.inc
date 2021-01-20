@@ -332,17 +332,7 @@ Freedom of Information and Protection of Privacy Act and will be protected
 function upei_roblib_ill_request_form($form, &$form_state) {
   module_load_include('inc', 'upei_roblib_ill', 'includes/utilities');
   $emergency_message = '<div class="messages messages--error closure-notice">
-Due to the current Covid-19 restrictions, many libraries are unable to provide
-print books or other "returnables."  <strong>We are neither borrowing from nor lending
-to libraries outside the Atlantic bubble</strong> but both UPEI patrons and other
-libraries are now able to submit requests and we will do our best to
-locate/provide a print copy within Atlantic Canada. Note that ebooks cannot
-be "borrowed" through ILL -- not just now but at any time -- due to publisher
-restrictions. Libraries must purchase ebooks in order to access them. We are
-able to provide ebook chapters, e-journal articles, etc. Scan on Demand
-(Scanning from our books or print journals) also resumed as of May 25. Simply
-choose the appropriate form (Book Chapter or Journal Article) from the drop-down
- menu associated with "Item Type".</div>';
+ Due to the current Covid-19 restrictions, many libraries across the country are unable to provide print books or other "returnables." UPEI patrons and other libraries are able to submit requests and we will do our best to locate/provide a print copy, however, there may be delays with staff having limited access to their campuses and the need for books to be quarantined upon arrival. Note that ebooks cannot be "borrowed" through ILL -- not just now but at any time -- due to publisher restrictions. Libraries must purchase ebooks in order to access them. We are able to provide ebook chapters, e-journal articles, etc. Scan on Demand (Scanning from our books or print journals) also resumed as of May 25. Simply choose the appropriate form (Book Chapter or Journal Article) from the drop-down menu associated with "Item Type". The <strong>process for retrieving requested journal articles or book chapters has changed</strong> as of December 15, 2020.   </div>';
   $form['#prefix'] = $emergency_message . '<div id="upei-roblib-ill-request-form">';
   $form['#suffix'] = '<div class="roblib-required">* = Required Field</div></div>';
   $type = upei_roblib_ill_get_request_variable('genre');
