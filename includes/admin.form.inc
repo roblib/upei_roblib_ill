@@ -66,6 +66,13 @@ function upei_roblib_ill_admin_form($form, &$form_state) {
     '#description' => t('The phone number we want to show to the user after a user has submitted an ILL request'),
     '#default_value' => variable_get('upei_roblib_ill_contact_phone', '902-566-0445'),
   ];
+  $form['upei_roblib_ill_header_message'] = [
+    '#required' => TRUE,
+    '#type' => 'textarea',
+    '#title' => t('ILL Header Message'),
+    '#description' => t('The message that appears at the top of the ILL form, recently used for Covid messages.  Leave this blank for no message to appear at the top of the form.'),
+    '#default_value' => variable_get('upei_roblib_ill_header_message', ''),
+  ];
 
 
   return system_settings_form($form);
