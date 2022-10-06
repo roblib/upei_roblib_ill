@@ -237,7 +237,6 @@ Freedom of Information and Protection of Privacy Act and will be protected
     'Financial Mathematics' => t('Financial Mathematics'),
     'Foods and Nutrition' => t('Foods and Nutrition'),
     'French' => t('French'),
-    'Global Affairs' => t('Global Affairs'),
     'Graduate Studies (DrAH, Global Aff., etc.)' => t('Graduate Studies (DrAH, Global Aff., etc.)'),
     'History' => t('History'),
     'Ikeras' => t('Ikeras'),
