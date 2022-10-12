@@ -239,7 +239,7 @@ Freedom of Information and Protection of Privacy Act and will be protected
     'French' => t('French'),
     'Graduate Studies (DrAH, Global Aff., etc.)' => t('Graduate Studies (DrAH, Global Aff., etc.)'),
     'History' => t('History'),
-    'Ikeras' => t('Ikeras'),
+    'IKERAS' => t('IKERAS'),
     'Integrated Studies' => t('Integrated Studies'),
     'Island Studies' => t('Island Studies'),
     'Journalism' => t('Journalism'),
